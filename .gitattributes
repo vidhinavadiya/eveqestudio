@@ -1,8 +1,0 @@
-# Force all JS files to use LF on commit
-*.js text eol=lf
-*.ts text eol=lf
-
-# Force JSON, CSS, HTML to use LF
-*.json text eol=lf
-*.css text eol=lf
-*.html text eol=lf
