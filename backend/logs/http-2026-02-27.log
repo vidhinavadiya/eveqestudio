@@ -1,0 +1,69 @@
+{"level":"info","message":"Server is starting...","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:05"}
+{"level":"info","message":"Server running on port 5000","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:05"}
+{"level":"http","message":"\u001b[0mGET /api/coupon/all \u001b[36m304 \u001b[0m85.344 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:20"}
+{"level":"http","message":"\u001b[0mGET /api/category/public \u001b[36m304 \u001b[0m143.543 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:20"}
+{"level":"http","message":"\u001b[0mGET /api/bxgy-coupon \u001b[36m304 \u001b[0m507.788 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:20"}
+{"level":"http","message":"\u001b[0mGET /api/product/customer/products \u001b[36m304 \u001b[0m4285.825 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:24"}
+{"level":"http","message":"\u001b[0mGET /api/coupon/all \u001b[36m304 \u001b[0m3801.672 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:24"}
+{"level":"http","message":"\u001b[0mGET /api/category/public \u001b[36m304 \u001b[0m34.066 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:24"}
+{"level":"http","message":"\u001b[0mGET /api/bxgy-coupon \u001b[36m304 \u001b[0m51.154 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:24"}
+{"level":"http","message":"\u001b[0mGET /api/category/public \u001b[36m304 \u001b[0m300.115 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:26"}
+{"level":"http","message":"\u001b[0mGET /api/product/customer/products \u001b[36m304 \u001b[0m2949.903 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:28"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1772016744555-725289901.png \u001b[36m304 \u001b[0m2931.289 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:28"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1772016744568-820973607.png \u001b[36m304 \u001b[0m10.380 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:28"}
+{"level":"http","message":"\u001b[0mGET /api/category/public \u001b[36m304 \u001b[0m37.636 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770893351934-112110058.jpg \u001b[36m304 \u001b[0m33.203 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /api/category/public \u001b[36m304 \u001b[0m10.646 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /api/category/public \u001b[36m304 \u001b[0m11.505 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770893351935-327085415.jpg \u001b[36m304 \u001b[0m1.084 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770713353839-456456574.jpg \u001b[36m304 \u001b[0m2.993 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770713353840-757535187.jpg \u001b[36m304 \u001b[0m4.234 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770701132812-623649961.jpg \u001b[36m304 \u001b[0m3.097 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770701133074-526466174.jpg \u001b[36m304 \u001b[0m4.209 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770699985375-234972420.jpg \u001b[36m304 \u001b[0m6.391 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770699985377-98704428.mp4 \u001b[36m304 \u001b[0m2.169 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770640100075-802217584.jpg \u001b[36m304 \u001b[0m2.850 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770640100076-415734679.webp \u001b[36m304 \u001b[0m5.215 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770640111827-393967829.jpg \u001b[36m304 \u001b[0m2.097 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770640111827-510526885.jpg \u001b[36m304 \u001b[0m3.626 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770640122887-780021415.jpg \u001b[36m304 \u001b[0m1.510 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770640122887-295396351.jpg \u001b[36m304 \u001b[0m2.071 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770700985075-453253349.jpg \u001b[36m304 \u001b[0m1.733 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770700985075-180738284.jpg \u001b[36m304 \u001b[0m2.949 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770640132988-484568725.jpg \u001b[36m304 \u001b[0m5.532 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770640132988-724191272.jpg \u001b[36m304 \u001b[0m7.455 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/categories/adba1ec1-a482-4f98-98b1-5ad6c985c511.png \u001b[36m304 \u001b[0m2.105 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/categories/1108a604-7165-422d-bd9f-c4795039fef4.jpg \u001b[36m304 \u001b[0m2.412 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/categories/9c755664-289a-4fdf-9cef-368c97ee1dc7.jpg \u001b[36m304 \u001b[0m3.518 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/categories/bf946713-3129-43b9-90fe-5148796e9620.jpg \u001b[36m304 \u001b[0m1.889 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/categories/d2923d48-9ab0-4838-8f54-9002b35c7213.jpg \u001b[36m304 \u001b[0m3.420 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/categories/dada3604-d201-40c3-b93a-0669a1066148.jpg \u001b[36m304 \u001b[0m0.793 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/categories/7f65856c-1dfa-41a4-8dfb-1b69cbc48129.jpg \u001b[36m304 \u001b[0m1.466 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/categories/bc597386-f190-4858-8878-3fab97908911.jpg \u001b[36m304 \u001b[0m2.755 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/categories/bea7c1af-d465-4647-b591-3a5df513404b.jpg \u001b[36m304 \u001b[0m4.040 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/categories/729f495f-ad45-4288-8d83-d640afe47893.jpg \u001b[36m304 \u001b[0m2.046 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/categories/e3f72115-28af-4ce7-8a9c-1c0cc8d40931.jpg \u001b[36m304 \u001b[0m1.940 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/categories/4cff487a-664d-4714-bac2-bd583a536f8a.jpg \u001b[36m304 \u001b[0m1.953 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /uploads/categories/f8c13049-2922-453b-b8c4-30a6ffe810bb.webp \u001b[36m304 \u001b[0m1.790 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:29:29"}
+{"level":"http","message":"\u001b[0mGET /api/product/customer/23 \u001b[36m304 \u001b[0m32.157 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:34:19"}
+{"level":"http","message":"\u001b[0mGET /api/product/customer/23 \u001b[36m304 \u001b[0m12.238 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:34:19"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770893351935-587752232.webp \u001b[36m304 \u001b[0m3.510 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:34:19"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770893351937-491917877.jpg \u001b[36m304 \u001b[0m5.300 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:34:19"}
+{"level":"http","message":"\u001b[0mGET /uploads/products/1770893351935-842720460.jpg \u001b[36m304 \u001b[0m6.522 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:34:19"}
+{"level":"http","message":"\u001b[0mGET /api/coupon/all \u001b[36m304 \u001b[0m12.687 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:34:19"}
+{"level":"http","message":"\u001b[0mGET /api/category/public \u001b[36m304 \u001b[0m34.023 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:34:19"}
+{"level":"http","message":"\u001b[0mGET /api/bxgy-coupon \u001b[36m304 \u001b[0m57.102 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:34:19"}
+{"level":"http","message":"\u001b[0mGET /api/coupon/all \u001b[36m304 \u001b[0m34.592 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:34:19"}
+{"level":"http","message":"\u001b[0mGET /api/category/public \u001b[36m304 \u001b[0m42.768 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:34:19"}
+{"level":"http","message":"\u001b[0mGET /api/product/related/23 \u001b[36m304 \u001b[0m711.942 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:34:19"}
+{"level":"http","message":"\u001b[0mGET /api/category/public \u001b[36m304 \u001b[0m459.799 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:34:19"}
+{"level":"http","message":"\u001b[0mGET /api/bxgy-coupon \u001b[36m304 \u001b[0m671.696 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:34:19"}
+{"level":"http","message":"\u001b[0mGET /api/category/public \u001b[36m304 \u001b[0m11.137 ms - -\u001b[0m","service":"eveqestudio-backend","timestamp":"2026-02-27 11:34:19"}
+{"level":"info","message":"Server is starting...","service":"eveqestudio-backend","timestamp":"2026-02-27 11:50:50"}
+{"level":"info","message":"Server running on port 5000","service":"eveqestudio-backend","timestamp":"2026-02-27 11:50:50"}
+{"level":"info","message":"Server is starting...","service":"eveqestudio-backend","timestamp":"2026-02-27 11:53:36"}
+{"level":"info","message":"Server running on port 5000","service":"eveqestudio-backend","timestamp":"2026-02-27 11:53:36"}
+{"level":"info","message":"Server is starting...","service":"eveqestudio-backend","timestamp":"2026-02-27 11:53:42"}
+{"level":"info","message":"Server running on port 5000","service":"eveqestudio-backend","timestamp":"2026-02-27 11:53:42"}
+{"level":"info","message":"Server is starting...","service":"eveqestudio-backend","timestamp":"2026-02-27 13:44:02"}
+{"level":"info","message":"Server running on port 5000","service":"eveqestudio-backend","timestamp":"2026-02-27 13:44:02"}
