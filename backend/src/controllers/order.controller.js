@@ -1,42 +1,3 @@
-// // // const orderService = require('../services/order.service');
-
-// // // class OrderController {
-// // //     /**
-// // //      * Process checkout and create order
-// // //      */
-// // //     processCheckout = async (req, res) => {
-// // //         try {
-// // //             // User ID auth middleware se aa raha hai
-// // //             const userId = req.user.id; 
-            
-// // //             // Checkout process call karein
-// // //             const order = await orderService.checkout(userId, req.body);
-            
-// // //             return res.status(201).json({
-// // //                 success: true,
-// // //                 message: "Order placed successfully!",
-// // //                 data: {
-// // //                     orderNumber: order.orderNumber,
-// // //                     totalAmount: order.totalAmount,
-// // //                     status: order.orderStatus,
-// // //                     id: order.id
-// // //                 }
-// // //             });
-// // //         } catch (error) {
-// // //             console.error("Checkout Error:", error.message);
-// // //             return res.status(400).json({
-// // //                 success: false,
-// // //                 message: error.message || "Something went wrong during checkout"
-// // //             });
-// // //         }
-// // //     }
-
-// // //     // Aap yahan aur methods add kar sakte hain, jaise:
-// // //     // getOrderDetails = async (req, res) => { ... }
-// // // }
-
-// // // module.exports = new OrderController();
-
 // // const orderService = require('../services/order.service');
 
 // // class OrderController {
@@ -172,21 +133,13 @@ const sendOrderConfirmation = require('../utils/orderEmail');
 const sendWhatsAppOrderMsg = require('../utils/whatsapp');
 
 class OrderController {
-
+    //create order
     processCheckout = async (req, res) => {
         try {
             const userId = req.user.id;
-            
-            // 1. Pehle order create karein
             const orderData = await orderService.checkout(userId, req.body);
-
-            // 2. Ab orderData mil gaya hai, toh yahan log karein (Debugging ke liye)
-            console.log("DEBUG: Order Data Email ->", orderData.email);
-            console.log("DEBUG: Order Data Phone ->", orderData.phone);
-
             if (orderData.paymentMethod === 'prepaid') {
                 const razorpayOrder = await paymentService.createRazorpayOrder(orderData.id, orderData.totalAmount);
-
                 return res.status(201).json({
                     success: true,
                     message: "Order placed successfully! Proceed to payment",
@@ -197,8 +150,7 @@ class OrderController {
                     }
                 });
             }
-
-            // 3. COD Flow
+            //COD Flow
             try {
                 // Check karein ki email/phone null toh nahi hain
                 if (orderData.email) {
@@ -210,13 +162,11 @@ class OrderController {
             } catch (mailError) {
                 console.error("Notification Error (COD):", mailError.message);
             }
-
             return res.status(201).json({
                 success: true,
                 message: "Order placed successfully! COD selected",
                 data: orderData
             });
-
         } catch (error) {
             console.error("Checkout Error:", error.message);
             return res.status(400).json({
@@ -225,87 +175,93 @@ class OrderController {
             });
         }
     }
-
+    //verify payment
     verifyPayment = async (req, res) => {
         try {
             const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId } = req.body;
-
             const isValid = await paymentService.verifyPayment({
                 razorpay_order_id,
                 razorpay_payment_id,
                 razorpay_signature
             });
-
             if (!isValid) throw new Error("Payment verification failed");
-
             const db = require('../database/models'); 
             const OrderModel = db.order; 
-
             const orderData = await OrderModel.findByPk(orderId);
-            
             if (!orderData) throw new Error("Order not found in database");
-
             orderData.paymentStatus = 'paid';
             orderData.orderStatus = 'confirmed';
             await orderData.save();
-
             try {
                 if (orderData.email) await sendOrderConfirmation(orderData.email, orderData);
                 if (orderData.phone) await sendWhatsAppOrderMsg(orderData.phone, orderData);
             } catch (mailError) {
                 console.error("Notification Error (Prepaid):", mailError.message);
             }
-
             return res.json({ 
                 success: true, 
                 message: "Payment successful", 
                 data: orderData 
             });
-
         } catch (error) {
             console.error("Verification Error:", error.message);
             return res.status(400).json({ success: false, message: error.message });
         }
     }
-
+    //gey my order
     getMyOrders = async (req, res) => {
         try {
             const userId = req.user.id;
             const { order, OrderItem } = require('../database/models');
-
             const orders = await order.findAll({
                 where: { userId: userId },
                 include: [{ model: OrderItem, as: 'items' }],
                 order: [['createdAt', 'DESC']]
             });
-
             return res.json({
                 success: true,
                 data: orders
             });
         } catch (error) {
-            return res.status(400).json({ success: false, message: error.message });
+            return res.status(400).json({ 
+                success: false, 
+                message: error.message 
+            });
         }
     }
-      async getAllOrders(req, res) {
+    //get all order
+    async getAllOrders(req, res) {
     try {
       const orders = await orderService.fetchAllOrders();
-      res.json({ success: true, data: orders });
+      res.json({ 
+        success: true, 
+        data: orders 
+    });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ success: false, message: "Server Error" });
+      res.status(500).json({ 
+        success: false, 
+        message: "Server Error" 
+    });
     }
   }
-
+  //update status
   async updateStatus(req, res) {
     try {
       const { id } = req.params;
       const { status } = req.body;
       const updatedOrder = await orderService.changeOrderStatus(id, status);
-      res.json({ success: true, message: "Status updated", data: updatedOrder });
+      res.json({ 
+        success: true, 
+        message: "Status updated", 
+        data: updatedOrder 
+    });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ success: false, message: err.message || "Server Error" });
+      res.status(500).json({ 
+        success: false, 
+        message: err.message || "Server Error" 
+    });
     }
   }
 }
