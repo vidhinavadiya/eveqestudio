@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import AdminSidebar from '../../../components/admin/AdminSidebar';
 
@@ -8,6 +8,7 @@ export default function Review({ onLogout }) {
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
+  const token = localStorage.getItem('token');
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -17,20 +18,16 @@ export default function Review({ onLogout }) {
   const [editImages, setEditImages] = useState([]);
   const [products, setProducts] = useState([]);
 
-const fetchProducts = async () => {
+const fetchProducts = useCallback(async () => {
   try {
-    const res = await axios.get(
-      "http://localhost:5000/api/product",
-      {
-        headers: { Authorization: `Bearer ${token}` }
-      }
-    );
-
+    const res = await axios.get("http://localhost:5000/api/product", {
+      headers: { Authorization: `Bearer ${token}` }
+    });
     setProducts(res.data.data || []);
   } catch (err) {
     console.error("Failed to load products");
   }
-};
+}, [token]); // token yahan zaruri hai
 
   const [newReview, setNewReview] = useState({
     userId: '',
@@ -46,8 +43,6 @@ const fetchProducts = async () => {
     rating: 1,
     comment: ''
   });
-
-  const token = localStorage.getItem('token');
 
   // Fetch All Reviews
   useEffect(() => {
@@ -67,7 +62,7 @@ const fetchProducts = async () => {
 if (token) {
   fetchReviews();
   fetchProducts();
-}  }, [token]);
+}  }, [token, fetchProducts]);
 
   // Handle Add Review
 const handleAddReview = async (e) => {
