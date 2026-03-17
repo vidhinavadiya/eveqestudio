@@ -214,7 +214,7 @@ useEffect(() => {
               <Link to="/all-products" className="px-10 py-5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold rounded-full shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 transition-all duration-400">
                 Start Exploring
               </Link>
-              <Link to="/custom" className="px-10 py-5 border-2 border-cyan-400 text-cyan-300 hover:bg-cyan-500/20 rounded-full transition-all duration-400 hover:scale-105">
+              <Link to="/my-orders" className="px-10 py-5 border-2 border-cyan-400 text-cyan-300 hover:bg-cyan-500/20 rounded-full transition-all duration-400 hover:scale-105">
                 Custom Orders
               </Link>
             </div>

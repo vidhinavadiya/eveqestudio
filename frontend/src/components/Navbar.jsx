@@ -320,7 +320,7 @@ export default function Navbar({
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search products... (e.g. PLA filament, 3D printer)"
+                placeholder="Search"
                 className="w-full px-6 py-5 text-lg md:text-xl bg-transparent focus:outline-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                 autoFocus
               />
@@ -342,9 +342,7 @@ export default function Navbar({
               </div>
             )}
 
-            <div className="px-6 py-3 text-center text-sm text-gray-500 dark:text-gray-400">
-              Press <kbd className="px-2 py-1 bg-gray-200 dark:bg-gray-800 rounded">Esc</kbd> to close
-            </div>
+            
           </div>
         </div>
       )}

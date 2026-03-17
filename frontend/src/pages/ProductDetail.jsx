@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import { useCart } from '../context/CartContext';
 import ReviewSection from "../components/ReviewSection";
 import ProductFaqSection from "../components/ProductFaqSection";
+import IncludedAddons from "../components/IncludedAddons";
 import { toast } from 'react-hot-toast';
 import { FiCopy } from 'react-icons/fi';
 
@@ -1129,6 +1130,7 @@ if (loading) {
     </div>
   </div>
 </section>
+<IncludedAddons productId={product?.productId} />
         <ProductFaqSection darkMode={darkMode} />
 
       </main>

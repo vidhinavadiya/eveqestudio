@@ -23,6 +23,7 @@ import BXGYCoupons from './pages/admin/bxgy/BXGYCoupons';
 import Orders from './pages/admin/order/order';
 import Review from './pages/admin/review/Review';
 import Faqs from './pages/admin/faq/Faqs';
+import ProductAddons from './pages/admin/productAddons/ProductAddons';
 import ProductDetail from './pages/ProductDetail';
 import Search from './pages/Search';
 import CategorySubcategories from './pages/CategorySubcategories';
@@ -106,6 +107,7 @@ import MyOrders from './pages/MyOrders';
         <Route path="/admin/orders" element={ isLoggedIn && userRole === 'admin' ? <Orders onLogout={handleLogout} darkMode={darkMode} toggleDarkMode={toggleDarkMode}/> : <Navigate to="/" replace /> } />        
         <Route path="/admin/reviews" element={isLoggedIn && userRole === 'admin' ? <Review onLogout={handleLogout} darkMode={darkMode} toggleDarkMode={toggleDarkMode}/> : <Navigate to="/" replace />} />
         <Route path="/admin/faqs" element={isLoggedIn && userRole === 'admin' ? <Faqs onLogout={handleLogout} darkMode={darkMode} toggleDarkMode={toggleDarkMode}/> : <Navigate to="/" replace />} />
+        <Route path="/admin/productaddons" element={isLoggedIn && userRole === 'admin' ? <ProductAddons onLogout={handleLogout} darkMode={darkMode} toggleDarkMode={toggleDarkMode}/> : <Navigate to="/" replace />} />
         {/* Seller Routes */}
         <Route path="/seller" element={isLoggedIn && userRole === 'seller' ? <SellerDashboard onLogout={handleLogout} darkMode={darkMode} toggleDarkMode={toggleDarkMode}/> : <Navigate to="/" replace />} />
 

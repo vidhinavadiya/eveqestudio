@@ -129,6 +129,25 @@ export default function AdminSidebar({ active = 'dashboard', onLogout }) {
   </svg>
   FAQs
 </button>
+<button 
+  className={itemClass('productaddons')} 
+  onClick={() => navigate('/admin/productaddons')}
+>
+  <svg 
+    className="w-5 h-5" 
+    fill="none" 
+    stroke="currentColor" 
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.77 9.77 0 01-4-.8L3 20l1.2-3.6A7.96 7.96 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+    />
+  </svg>
+  ProductAppons
+</button>
 
         {/* Spacer */}
         <div className="h-8"></div>

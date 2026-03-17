@@ -54,7 +54,7 @@ const MyOrders = ({ isLoggedIn, onLogout, darkMode, toggleDarkMode }) => {
                             Check the status of your recent orders and downloads.
                         </p>
                     </div>
-                    <Link to="/" className="text-indigo-600 font-bold hover:underline">
+                    <Link to="/all-products" className="text-indigo-600 font-bold hover:underline">
                         Continue Shopping →
                     </Link>
                 </div>
