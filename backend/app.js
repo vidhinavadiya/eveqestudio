@@ -19,6 +19,9 @@ var bxgycouponRouter = require('./src/routes/bxgycoupon');
 var orderRouter = require('./src/routes/order');
 var reviewRoutes = require('./src/routes/review');
 var faqRoutes = require("./src/routes/faq");
+var productAddon = require("./src/routes/productAddon");
+var adminRoutes = require('./src/routes/admin.routes');
+
 
 var app = express();
 
@@ -50,6 +53,7 @@ app.use(cors({
   credentials: true
 }));
 
+app.use('/uploads', express.static(path.join(__dirname, 'src/uploads')));
 // Routes
 app.use('/', indexRouter);
 app.use('/api/auth', usersRouter);
@@ -58,7 +62,7 @@ app.use('/uploads/categories', express.static(path.join(__dirname, 'src/uploads/
 app.use('/api/subcategory', subCategoryRouter);
 app.use('/uploads/subcategories', express.static(path.join(__dirname, 'src/uploads/subcategories')));
 app.use('/api/product', productRouter);
-app.use('/uploads/products', express.static(path.join(__dirname, 'src/uploads/products'))); // products folder (s सही)
+app.use('/uploads/products', express.static(path.join(__dirname, 'src/uploads/products')));
 app.use('/api/coupon', couponRouter);
 app.use('/api/cart' , cartRouter);
 app.use('/api/bxgy-coupon', bxgycouponRouter);
@@ -66,6 +70,9 @@ app.use('/api/order', orderRouter);
 app.use('/api/reviews', reviewRoutes);
 app.use('/uploads/reviews', express.static(path.join(__dirname, 'src/uploads/reviews')));
 app.use("/api/faqs", faqRoutes);
+app.use("/api/link", productAddon);
+app.use('/uploads/product-addons', express.static(path.join(__dirname, 'src/uploads/product_addons')));
+app.use('/api/admin', adminRoutes);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Eveqe Studio API is running' });

@@ -296,7 +296,7 @@ static async updateProduct(id, data, files, transaction) {
         }
       ],
       limit: 6,
-      order: [['createdAt', 'DESC']] // works because 'createdAt' included in attributes
+      order: [['createdAt', 'DESC']]
     });
   }
 
