@@ -70,7 +70,6 @@ function AdminDashboard({ onLogout }) {
             }))
           });
         }
-
       } catch (error) {
         console.error("Dashboard Fetch Error:", error);
       } finally {

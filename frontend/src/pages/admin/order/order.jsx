@@ -167,10 +167,19 @@ const fetchOrders = async () => {
                             <td className="px-4 py-3 border-b dark:border-gray-700">
                               <div className="flex items-center gap-3">
                                 <img
-                                  src={`http://localhost:5000/${item.productImage}`}
-                                  alt={item.productName}
-                                  className="w-12 h-12 object-cover rounded"
-                                />
+  src={
+    item.productImage
+      ? `http://localhost:5000/${item.productImage.replace(/^\/+/, '')}`
+      : `http://localhost:5000/uploads/products/default-product-image.jpg`
+  }
+  alt={item.productName}
+  className="w-12 h-12 object-cover rounded"
+  onError={(e) => {
+    if (!e.target.src.includes("default-product-image.jpg")) {
+      e.target.src = "http://localhost:5000/uploads/products/default-product-image.jpg";
+    }
+  }}
+/>
                                 <span className="dark:text-white">{item.productName}</span>
                               </div>
                             </td>

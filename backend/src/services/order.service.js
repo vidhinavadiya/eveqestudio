@@ -28,8 +28,7 @@ class OrderService {
                 let price = 0;
                 let itemTotal = 0;
 
-                const imageUrl = item.productImage || "default-product-image.jpg";
-
+const imageUrl = item.productImage || "uploads/products/default-product-image.jpg";
                 // 🔹 Skip free items price
                 if (!item.isFreeItem) {
 
@@ -192,8 +191,8 @@ class OrderService {
         }
     }
 
-      async fetchAllOrders() {
-    return orderRepository.getAllOrders();
+    async fetchAllOrders() {
+        return orderRepository.getAllOrders();
   }
 
   async changeOrderStatus(id, status) {

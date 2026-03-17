@@ -106,11 +106,19 @@ const MyOrders = ({ isLoggedIn, onLogout, darkMode, toggleDarkMode }) => {
                                                 <div key={idx} className="flex items-center gap-4">
                                                     <div className="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden flex-shrink-0 border dark:border-gray-700">
                                                         <img 
-                                                            src={`http://localhost:5000/${item.productImage}`} 
-                                                            alt={item.productName} 
-                                                            className="w-full h-full object-cover"
-                                                            onError={(e) => e.target.src = 'https://via.placeholder.com/150'}
-                                                        />
+  src={
+    item.productImage
+      ? `http://localhost:5000/${item.productImage.replace(/^\/+/, '')}`
+      : `http://localhost:5000/uploads/products/default-product-image.jpg`
+  }
+  alt={item.productName}
+  className="w-full h-full object-cover"
+onError={(e) => {
+  if (!e.target.src.includes("default-product-image.jpg")) {
+    e.target.src = "http://localhost:5000/uploads/products/default-product-image.jpg";
+  }
+}}
+/>
                                                     </div>
                                                     <div>
                                                         <h4 className="font-bold text-gray-900 dark:text-white line-clamp-1">{item.productName}</h4>
