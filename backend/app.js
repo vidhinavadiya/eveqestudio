@@ -1,3 +1,5 @@
+require("dotenv").config();
+require('./src/workers/email.worker');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');

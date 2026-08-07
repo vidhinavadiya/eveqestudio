@@ -35,10 +35,13 @@ class SubcategoryController {
   static async getSubcategoryById(req, res) {
     try {
       const subcategory = await SubcategoryService.getSubcategoryById(req.params.id);
-      if (!subcategory) return res.status(404).json({ 
-        success: false, 
-        message: 'Subcategory not found' 
-      });
+      if (!subcategory) 
+        {
+          return res.status(404).json({ 
+            success: false, 
+            message: 'Subcategory not found' 
+        });
+      }
       res.status(200).json({ 
         success: true, 
         data: subcategory 
@@ -75,10 +78,12 @@ class SubcategoryController {
       const data = { ...req.body };
       if (req.file) data.subCategoryImage = req.file.filename;
       const subcategory = await SubcategoryService.updateSubcategory(req.params.id, data);
-      if (!subcategory) return res.status(404).json({ 
-        success: false, 
-        message: 'Subcategory not found' 
-      });
+      if (!subcategory) {
+        return res.status(404).json({ 
+          success: false, 
+          message: 'Subcategory not found' 
+        });
+      }
       res.status(200).json({ 
         success: true, 
         data: subcategory 

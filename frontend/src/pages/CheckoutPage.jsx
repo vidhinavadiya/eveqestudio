@@ -224,8 +224,20 @@ const handleSubmit = async (e) => {
               {cart.items.map(item => (
                 <div key={item.id} className="flex items-center gap-4 py-2">
                   <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-xl flex-shrink-0 overflow-hidden border border-gray-200 dark:border-gray-700">
-                    <img src={`http://localhost:5000/${item.productImage}`} alt={item.productName} className="w-full h-full object-cover" />
-                  </div>
+<img 
+  src={
+    item.productImage
+      ? `http://localhost:5000/${item.productImage.replace(/^\/+/, '')}`
+      : `http://localhost:5000/uploads/products/default-product-image.jpg`
+  }
+  alt={item.productName}
+  className="w-full h-full object-cover"
+  onError={(e) => {
+    if (!e.target.src.includes("default-product-image.jpg")) {
+      e.target.src = "http://localhost:5000/uploads/products/default-product-image.jpg";
+    }
+  }}
+/>                  </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-gray-900 dark:text-white truncate">{item.productName}</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">Qty: {item.quantity}</p>

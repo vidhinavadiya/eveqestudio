@@ -1,7 +1,6 @@
 const UserService = require('../services/user.service');
 
 class UserController {
-
     // REGISTER
     static async register(req, res) {
         try {
@@ -18,7 +17,6 @@ class UserController {
             });
         }
     }
-
     // LOGIN
     static async login(req, res) {
         try {
@@ -35,18 +33,6 @@ class UserController {
             });
         }
     }
-
-    // GET CURRENT USER PROFILE
-    static async getProfile(req, res) {
-        try {
-            const userId = req.user.id; // from AuthMiddleware
-            const user = await UserService.getById(userId);
-            return res.status(200).json({ success: true, user });
-        } catch (error) {
-            return res.status(404).json({ success: false, message: error.message });
-        }
-    }
-
     // UPDATE PROFILE
     static async updateProfile(req, res) {
         try {
@@ -58,32 +44,26 @@ class UserController {
                 user: updatedUser
             });
         } catch (error) {
-            return res.status(400).json({ success: false, message: error.message });
+            return res.status(400).json({ 
+                success: false, 
+                message: error.message 
+            });
         }
     }
-    static async forgotPassword(req, res) {
+    // GET CURRENT USER PROFILE
+    static async getProfile(req, res) {
         try {
-            const { email } = req.body;
-            if (!email) return res.status(400).json({ success: false, message: 'Email is required' });
-
-            const result = await UserService.forgotPassword(email);
-            return res.status(200).json(result);
+            const userId = req.user.id;
+            const user = await UserService.getById(userId);
+            return res.status(200).json({ 
+                success: true, 
+                user 
+            });
         } catch (error) {
-            return res.status(400).json({ success: false, message: error.message });
-        }
-    }
-    //reset password
-    static async resetPassword(req, res) {
-        try {
-            const { email, otp, newPassword } = req.body;
-            if (!email || !otp || !newPassword) {
-            return res.status(400).json({ success: false, message: 'Email, OTP, and new password are required' });
-            }
-
-            const result = await UserService.verifyOTPAndResetPassword(email, otp, newPassword);
-            return res.status(200).json(result);
-        } catch (error) {
-            return res.status(400).json({ success: false, message: error.message });
+            return res.status(404).json({ 
+                success: false, 
+                message: error.message 
+            });
         }
     }
     // GET ALL USERS (ADMIN)
@@ -101,7 +81,44 @@ class UserController {
             });
         }
     }
-
+    //forget password
+    static async forgotPassword(req, res) {
+        try {
+            const { email } = req.body;
+            if (!email) {
+                return res.status(400).json({ 
+                    success: false, 
+                    message: 'Email is required' 
+                });
+            }
+            const result = await UserService.forgotPassword(email);
+            return res.status(200).json(result);
+        } catch (error) {
+            return res.status(400).json({ 
+                success: false, 
+                message: error.message 
+            });
+        }
+    }
+    //reset password
+    static async resetPassword(req, res) {
+        try {
+            const { email, otp, newPassword } = req.body;
+            if (!email || !otp || !newPassword) {
+                return res.status(400).json({ 
+                    success: false, 
+                    message: 'Email, OTP, and new password are required' 
+                });
+            }
+            const result = await UserService.verifyOTPAndResetPassword(email, otp, newPassword);
+            return res.status(200).json(result);
+        } catch (error) {
+            return res.status(400).json({ 
+                success: false, 
+                message: error.message 
+            });
+        }
+    }
 }
 
 module.exports = UserController;

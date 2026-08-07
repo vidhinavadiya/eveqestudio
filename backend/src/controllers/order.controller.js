@@ -129,8 +129,9 @@
 
 const orderService = require('../services/order.service');
 const paymentService = require('../services/payment.service');
-const sendOrderConfirmation = require('../utils/orderEmail');
-const sendWhatsAppOrderMsg = require('../utils/whatsapp');
+// const sendOrderConfirmation = require('../utils/orderEmail');
+// const sendWhatsAppOrderMsg = require('../utils/whatsapp');
+const { addEmailJob } = require('../queues/email.queue');
 
 class OrderController {
     //create order
@@ -153,12 +154,19 @@ class OrderController {
             //COD Flow
             try {
                 // Check karein ki email/phone null toh nahi hain
+                // if (orderData.email) {
+                //     await sendOrderConfirmation(orderData.email, orderData);
+                // }
                 if (orderData.email) {
-                    await sendOrderConfirmation(orderData.email, orderData);
-                }
-                if (orderData.phone) {
-                    await sendWhatsAppOrderMsg(orderData.phone, orderData);
-                }
+  await addEmailJob({
+    userEmail: orderData.email,
+    type: 'order',
+    payload: orderData
+  });
+}
+                // if (orderData.phone) {
+                //     await sendWhatsAppOrderMsg(orderData.phone, orderData);
+                // }
             } catch (mailError) {
                 console.error("Notification Error (COD):", mailError.message);
             }
@@ -193,8 +201,15 @@ class OrderController {
             orderData.orderStatus = 'confirmed';
             await orderData.save();
             try {
-                if (orderData.email) await sendOrderConfirmation(orderData.email, orderData);
-                if (orderData.phone) await sendWhatsAppOrderMsg(orderData.phone, orderData);
+                // if (orderData.email) await sendOrderConfirmation(orderData.email, orderData);
+                if (orderData.email) {
+  await addEmailJob({
+    userEmail: orderData.email,
+    type: 'order',
+    payload: orderData
+  });
+}
+                // if (orderData.phone) await sendWhatsAppOrderMsg(orderData.phone, orderData);
             } catch (mailError) {
                 console.error("Notification Error (Prepaid):", mailError.message);
             }

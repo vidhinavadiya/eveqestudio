@@ -1,5 +1,6 @@
 const CouponRepository = require('../repositories/coupon.repository');
-const { cart, cartitem } = require('../database/models');
+const { sendCouponEmail } = require('../utils/coupon_email');
+const { cart, cartitem, user, Product, ProductImage  } = require('../database/models');
 
 class CouponService {
 
@@ -103,7 +104,12 @@ static async applyCoupon({ code, userId, cartId }) {
   }
 
   static async createCoupon(data) {
-    return await CouponRepository.create(data);
+      const coupon = await CouponRepository.create(data);
+    //send email
+for (const u of users) {
+  await sendCouponEmail(u, coupon, products);
+}
+return coupon;
   }
 
   static async updateCoupon(id, data) {
