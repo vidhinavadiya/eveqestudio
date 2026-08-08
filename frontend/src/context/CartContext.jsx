@@ -3,6 +3,8 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
 const CartContext = createContext();
+        const API_URL = process.env.REACT_APP_API_URL;
+
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState({
@@ -22,7 +24,7 @@ export const CartProvider = ({ children }) => {
     if (!token) return;
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:5000/api/cart', {
+      const res = await axios.get(`${API_URL}/api/cart`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCart(res.data.data || res.data);
@@ -46,7 +48,7 @@ export const CartProvider = ({ children }) => {
 
     try {
       await axios.post(
-        'http://localhost:5000/api/cart/add',
+        `${API_URL}/api/cart/add`,
         data,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -62,7 +64,7 @@ export const CartProvider = ({ children }) => {
   const updateQuantity = async (cartItemId, quantity) => {
     try {
       await axios.put(  // ← POST ki jagah PUT
-        'http://localhost:5000/api/cart/update-quantity',
+        `${API_URL}/api/cart/update-quantity`,
         { cartItemId, quantity },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -76,7 +78,7 @@ export const CartProvider = ({ children }) => {
   const removeItem = async (cartItemId) => {
     try {
       await axios.delete(  // ← POST ki jagah DELETE
-        'http://localhost:5000/api/cart/remove-item',
+        `${API_URL}/api/cart/remove-item`,
         { 
           data: { cartItemId },  // DELETE request mein body bhej sakte ho
           headers: { Authorization: `Bearer ${token}` } 
@@ -101,7 +103,7 @@ const applyCoupon = async (code, extraData = {}) => { // 👈 extraData add kiya
     if (!cartId) throw new Error('Cart ID not found');
 
     const res = await axios.post(
-      'http://localhost:5000/api/coupon/apply',
+      `${API_URL}/api/coupon/apply`,
       { 
         code: code.trim().toUpperCase(),
         cartId,
@@ -128,7 +130,7 @@ const removeCoupon = async () => {
     }
 
     await axios.post(
-      'http://localhost:5000/api/coupon/remove',
+      `${API_URL}/api/coupon/remove`,
       { cartId },   // 🔥 cartId bhejna zaruri hai
       { headers: { Authorization: `Bearer ${token}` } }
     );

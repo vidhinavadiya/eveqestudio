@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminSidebar from '../../../components/admin/AdminSidebar';
 
-const API_BASE_URL = 'http://localhost:5000/api/product';
-const CATEGORY_API = 'http://localhost:5000/api/category/public';
-const SUBCATEGORY_API = 'http://localhost:5000/api/subcategory/public';
-const BASE_MEDIA_URL = 'http://localhost:5000'; // For existing media URLs
+        const API_URL = process.env.REACT_APP_API_URL;
+
+const API_BASE_URL = `${API_URL}/api/product`;
+const CATEGORY_API = `${API_URL}/api/category/public`;
+const SUBCATEGORY_API = `${API_URL}/api/subcategory/public`;
+const BASE_MEDIA_URL = `${API_URL}`; // For existing media URLs
 
 export default function Products({ onLogout }) {
   const [products, setProducts] = useState([]);

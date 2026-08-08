@@ -2,8 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import AdminSidebar from '../../../components/admin/AdminSidebar';
 
-const API_BASE = 'http://localhost:5000/api/link'; // ← your route
-const BASE_MEDIA_URL = 'http://localhost:5000';   // adjust if needed
+        const API_URL = process.env.REACT_APP_API_URL;
+
+const API_BASE = `${API_URL}/api/link`; // ← your route
+const BASE_MEDIA_URL = `${API_URL}`;   // adjust if needed
 
 export default function ProductAddons({ onLogout }) {
   const [addons, setAddons] = useState([]);
@@ -36,7 +38,7 @@ export default function ProductAddons({ onLogout }) {
 
   const fetchProducts = useCallback(async () => {
   try {
-    const res = await axios.get("http://localhost:5000/api/product", {
+    const res = await axios.get(`${API_URL}/api/product`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 

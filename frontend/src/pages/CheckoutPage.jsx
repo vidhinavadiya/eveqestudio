@@ -12,6 +12,7 @@ export default function Checkout({ isLoggedIn, onLogout, darkMode, toggleDarkMod
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [placedOrderDetails, setPlacedOrderDetails] = useState(null);
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -48,7 +49,7 @@ const initPayment = (orderData, razorpayOrder) => {
     order_id: razorpayOrder.id,
     handler: async (response) => {
       try {
-        const verifyRes = await axios.post('http://localhost:5000/api/order/payment/verify', {
+        const verifyRes = await axios.post(`${API_URL}/api/order/payment/verify`, {
           razorpay_order_id: response.razorpay_order_id,
           razorpay_payment_id: response.razorpay_payment_id,
           razorpay_signature: response.razorpay_signature,
@@ -90,7 +91,7 @@ const handleSubmit = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
-    const res = await axios.post('http://localhost:5000/api/order/checkout', formData, {
+    const res = await axios.post(`${API_URL}/api/order/checkout`, formData, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -227,14 +228,14 @@ const handleSubmit = async (e) => {
 <img 
   src={
     item.productImage
-      ? `http://localhost:5000/${item.productImage.replace(/^\/+/, '')}`
-      : `http://localhost:5000/uploads/products/default-product-image.jpg`
+      ? `${API_URL}/${item.productImage.replace(/^\/+/, '')}`
+      : `${API_URL}/uploads/products/default-product-image.jpg`
   }
   alt={item.productName}
   className="w-full h-full object-cover"
   onError={(e) => {
     if (!e.target.src.includes("default-product-image.jpg")) {
-      e.target.src = "http://localhost:5000/uploads/products/default-product-image.jpg";
+      e.target.src = `${API_URL}/uploads/products/default-product-image.jpg`;
     }
   }}
 />                  </div>

@@ -4,9 +4,11 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+  const API_URL = process.env.REACT_APP_API_URL;
 
-const SUBCATEGORY_API = 'http://localhost:5000/api/subcategory/public';
-const PRODUCT_API = 'http://localhost:5000/api/product/customer/products';
+
+const SUBCATEGORY_API = `${API_URL}/api/subcategory/public`;
+const PRODUCT_API = `${API_URL}/api/product/customer/products`;
 
 export default function CategorySubcategories({ isLoggedIn, onLogout, darkMode, toggleDarkMode }) {
   const { categorySlug } = useParams();
@@ -270,7 +272,7 @@ export default function CategorySubcategories({ isLoggedIn, onLogout, darkMode, 
                     <img
                       src={
                         sub.subCategoryImage
-                          ? `http://localhost:5000/uploads/subcategories/${sub.subCategoryImage}`
+                          ? `${API_URL}/uploads/subcategories/${sub.subCategoryImage}`
                           : `https://via.placeholder.com/300?text=${encodeURIComponent(sub.subCategoryName)}`
                       }
                       alt={sub.subCategoryName}
@@ -319,7 +321,7 @@ export default function CategorySubcategories({ isLoggedIn, onLogout, darkMode, 
 
               {products.map((product) => {
                 const mainImage = product.images?.[0]?.fileUrl
-                  ? `http://localhost:5000${product.images[0].fileUrl}`
+                  ? `${API_URL}${product.images[0].fileUrl}`
                   : 'https://via.placeholder.com/400?text=Product';
 
                 return (

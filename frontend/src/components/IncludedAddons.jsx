@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+        const API_URL = process.env.REACT_APP_API_URL;
+
 export default function IncludedAddons({ productId }) {
   const [addons, setAddons] = useState([]);
 
@@ -9,7 +11,7 @@ export default function IncludedAddons({ productId }) {
 
     const fetchAddons = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/link/public");
+        const res = await axios.get(`${API_URL}/api/link/public`);
         const allAddons = res.data.data || [];
         const filtered = allAddons.filter(
           (addon) => String(addon.productId) === String(productId)
@@ -47,7 +49,7 @@ export default function IncludedAddons({ productId }) {
               {addon.image && (
                 <div className="w-full h-[180px] mb-3 overflow-hidden rounded">
                   <img
-                    src={`http://localhost:5000/uploads/product-addons/${addon.image}`}
+                    src={`${API_URL}/uploads/product-addons/${addon.image}`}
                     alt={addon.title}
                     className="w-full h-full object-cover transition-transform duration-500 
                                group-hover:scale-105"

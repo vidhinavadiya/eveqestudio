@@ -2,6 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import AdminSidebar from '../../../components/admin/AdminSidebar';
 
+        const API_URL = process.env.REACT_APP_API_URL;
+
+
 export default function Review({ onLogout }) {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,7 +23,7 @@ export default function Review({ onLogout }) {
 
 const fetchProducts = useCallback(async () => {
   try {
-    const res = await axios.get("http://localhost:5000/api/product", {
+    const res = await axios.get(`${API_URL}/api/product`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     setProducts(res.data.data || []);
@@ -48,7 +51,7 @@ const fetchProducts = useCallback(async () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/reviews', {
+        const res = await axios.get(`${API_URL}/api/reviews`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setReviews(res.data.data || []);
@@ -83,7 +86,7 @@ const handleAddReview = async (e) => {
     }
 
     const res = await axios.post(
-      'http://localhost:5000/api/reviews',
+      `${API_URL}/api/reviews`,
       formData,
       {
         headers: {
@@ -121,7 +124,7 @@ const handleUpdate = async (e) => {
     }
 
     const res = await axios.put(
-      `http://localhost:5000/api/reviews/${selectedReview.id}`,
+      `${API_URL}/api/reviews/${selectedReview.id}`,
       formData,
       {
         headers: {
@@ -148,7 +151,7 @@ const handleUpdate = async (e) => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/reviews/${selectedReview.id}`,
+        `${API_URL}/api/reviews/${selectedReview.id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setReviews(reviews.filter(r => r.id !== selectedReview.id));
@@ -255,7 +258,7 @@ const handleUpdate = async (e) => {
               {review.images.map((img) => (
                 <img
                   key={img.id}
-                  src={`http://localhost:5000${img.fileUrl}`}
+                  src={`${API_URL}${img.fileUrl}`}
                   alt="review"
                   className="w-12 h-12 object-cover rounded"
                 />

@@ -20,6 +20,7 @@ export default function ProfilePage({ isLoggedIn, onLogout }) {
   const [isEditing, setIsEditing] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
   const [saveError, setSaveError] = useState('');
+      const API_URL = process.env.REACT_APP_API_URL;
 
   // Redirect if not logged in
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function ProfilePage({ isLoggedIn, onLogout }) {
         return;
       }
 
-      const res = await fetch('http://localhost:5000/api/auth/me', {
+      const res = await fetch(`${API_URL}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -84,7 +85,7 @@ export default function ProfilePage({ isLoggedIn, onLogout }) {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/auth/me', {
+      const res = await fetch(`${API_URL}/api/auth/me`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,

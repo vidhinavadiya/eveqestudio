@@ -21,6 +21,7 @@ export default function HomePage({ isLoggedIn, onLogout, darkMode, toggleDarkMod
   const productsScrollRef = useRef(null);
   const autoScrollIntervalRef = useRef(null);
   const [isUserInteracting, setIsUserInteracting] = useState(false);
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const [reviews, setReviews] = useState([]);
 const reviewsScrollRef = useRef(null);
@@ -31,7 +32,7 @@ useEffect(() => {
   const fetchReviews = async () => {
     try {
       // Note: Aapka backend endpoint check kar lena, maine example diya hai
-      const res = await axios.get('http://localhost:5000/api/reviews/public');
+      const res = await axios.get(`${API_URL}/api/reviews/public`);
       setReviews(res.data.data || []);
     } catch (err) {
       console.error('Failed to load reviews', err);
@@ -73,7 +74,7 @@ useEffect(() => {
       await Promise.all(
         products.map(async (prod) => {
           const res = await axios.get(
-            `http://localhost:5000/api/reviews/product/${prod.productId}`
+            `${API_URL}/api/reviews/product/${prod.productId}`
           );
 
           const reviews = res.data.data || [];
@@ -116,7 +117,7 @@ useEffect(() => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/category/public');
+        const res = await axios.get(`${API_URL}/api/category/public`);
         setCategories(res.data.data || []);
       } catch (err) {
         console.error('Failed to load categories.', err);
@@ -129,7 +130,7 @@ useEffect(() => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/product/customer/products');
+        const res = await axios.get(`${API_URL}/api/product/customer/products`);
         setProducts(res.data.data || []);
       } catch (err) {
         console.error('Failed to load products', err);
@@ -252,7 +253,7 @@ useEffect(() => {
       >
         {categories.map((category) => {
           const imageUrl = category.categoryImage 
-            ? `http://localhost:5000/uploads/categories/${category.categoryImage}` 
+            ? `${API_URL}/uploads/categories/${category.categoryImage}` 
             : `https://via.placeholder.com/280x350?text=${encodeURIComponent(category.categoryName)}`;
 
           return (
@@ -375,7 +376,7 @@ useEffect(() => {
           className="flex gap-5 sm:gap-6 md:gap-8 lg:gap-10 overflow-x-auto pb-10 md:pb-12 pt-2 px-2 md:px-4 scroll-smooth scrollbar-hide snap-x snap-mandatory touch-pan-x"
         >
           {products.map((product, index) => {
-            const BASE_URL = 'http://localhost:5000';
+            const BASE_URL = `${API_URL}`;
             const img = product.images?.[0]?.fileUrl
               ? `${BASE_URL}${product.images[0].fileUrl}`
               : 'https://via.placeholder.com/400?text=Product';
@@ -565,7 +566,7 @@ useEffect(() => {
             );
 
             const pImg = validImage
-              ? `http://localhost:5000${validImage.fileUrl}`
+              ? `${API_URL}${validImage.fileUrl}`
               : "https://via.placeholder.com/300x300?text=No+Image";
 
             const uName =

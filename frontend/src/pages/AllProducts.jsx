@@ -5,8 +5,9 @@ import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import heroBg from '../assets/images/hero3.jpg';
+  const API_URL = process.env.REACT_APP_API_URL;
 
-const PRODUCT_API = 'http://localhost:5000/api/product/customer/products';
+const PRODUCT_API = `${API_URL}/api/product/customer/products`;
 
 export default function AllProducts({ isLoggedIn, onLogout, darkMode, toggleDarkMode }) {
   const [products, setProducts] = useState([]);
@@ -56,7 +57,7 @@ export default function AllProducts({ isLoggedIn, onLogout, darkMode, toggleDark
           products.map(async (prod) => {
             try {
               const res = await axios.get(
-                `http://localhost:5000/api/reviews/product/${prod.productId}`
+                `${API_URL}/api/reviews/product/${prod.productId}`
               );
               const reviews = res.data.data || [];
 
@@ -303,7 +304,7 @@ export default function AllProducts({ isLoggedIn, onLogout, darkMode, toggleDark
               `}
             >
               {filteredProducts.map((product, index) => {
-                const BASE_URL = 'http://localhost:5000';
+                const BASE_URL = `${API_URL}`;
                 const img = product.images?.[0]?.fileUrl
                   ? `${BASE_URL}${product.images[0].fileUrl}`
                   : 'https://via.placeholder.com/400?text=Product';

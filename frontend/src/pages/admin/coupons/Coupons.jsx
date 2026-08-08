@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminSidebar from '../../../components/admin/AdminSidebar';
 
+        const API_URL = process.env.REACT_APP_API_URL;
+
 export default function Coupons({ onLogout }) {
   const [coupons, setCoupons] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,7 +38,7 @@ export default function Coupons({ onLogout }) {
   useEffect(() => {
     const fetchCoupons = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/coupon/all', {
+        const res = await axios.get(`${API_URL}/api/coupon/all`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCoupons(res.data.data || res.data || []);
@@ -81,7 +83,7 @@ const resetNewCoupon = () => {
         expiryDate: newCoupon.expiryDate || null,
       };
 
-      const res = await axios.post('http://localhost:5000/api/coupon/create', payload, {
+      const res = await axios.post(`${API_URL}/api/coupon/create`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -113,7 +115,7 @@ const resetNewCoupon = () => {
       };
 
       const res = await axios.put(
-        `http://localhost:5000/api/coupon/update/${selectedCoupon.id}`,
+        `${API_URL}/api/coupon/update/${selectedCoupon.id}`,
         payload,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -131,7 +133,7 @@ const resetNewCoupon = () => {
   // Delete coupon
   const handleDeleteCoupon = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/coupon/delete/${selectedCoupon.id}`, {
+      await axios.delete(`${API_URL}/api/coupon/delete/${selectedCoupon.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

@@ -6,12 +6,14 @@ import { Link } from 'react-router-dom';
 const MyOrders = ({ isLoggedIn, onLogout, darkMode, toggleDarkMode }) => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+      const API_URL = process.env.REACT_APP_API_URL;
+
 
     useEffect(() => {
         const fetchOrders = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const res = await axios.get('http://localhost:5000/api/order/my-orders', {
+                const res = await axios.get(`${API_URL}/api/order/my-orders`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (res.data.success) {
@@ -108,14 +110,14 @@ const MyOrders = ({ isLoggedIn, onLogout, darkMode, toggleDarkMode }) => {
                                                         <img 
   src={
     item.productImage
-      ? `http://localhost:5000/${item.productImage.replace(/^\/+/, '')}`
-      : `http://localhost:5000/uploads/products/default-product-image.jpg`
+      ? `${API_URL}/${item.productImage.replace(/^\/+/, '')}`
+      : `${API_URL}/uploads/products/default-product-image.jpg`
   }
   alt={item.productName}
   className="w-full h-full object-cover"
 onError={(e) => {
   if (!e.target.src.includes("default-product-image.jpg")) {
-    e.target.src = "http://localhost:5000/uploads/products/default-product-image.jpg";
+    e.target.src = `${API_URL}/uploads/products/default-product-image.jpg`;
   }
 }}
 />

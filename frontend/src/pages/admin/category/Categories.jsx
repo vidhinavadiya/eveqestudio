@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminSidebar from '../../../components/admin/AdminSidebar';
 
+        const API_URL = process.env.REACT_APP_API_URL;
+
 export default function Categories({ onLogout }) {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -39,7 +41,7 @@ export default function Categories({ onLogout }) {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/category', {
+        const res = await axios.get(`${API_URL}/api/category`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setCategories(res.data.data || res.data || []);
@@ -71,7 +73,7 @@ export default function Categories({ onLogout }) {
     if (newCategory.categoryImage) formData.append('categoryImage', newCategory.categoryImage);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/category', formData, {
+      const res = await axios.post(`${API_URL}/api/category`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -105,7 +107,7 @@ export default function Categories({ onLogout }) {
     if (editForm.categoryImage) formData.append('categoryImage', editForm.categoryImage);
 
     try {
-      const res = await axios.put(`http://localhost:5000/api/category/${selectedCategory.id}`, formData, {
+      const res = await axios.put(`${API_URL}/api/category/${selectedCategory.id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -123,7 +125,7 @@ export default function Categories({ onLogout }) {
   // Delete category
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/category/${selectedCategory.id}`, {
+      await axios.delete(`${API_URL}/api/category/${selectedCategory.id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -204,7 +206,7 @@ export default function Categories({ onLogout }) {
                       <td className="px-6 py-4">
                         {cat.categoryImage ? (
                           <img
-                            src={`http://localhost:5000/uploads/categories/${cat.categoryImage}`} // backend uploads folder
+                            src={`${API_URL}/uploads/categories/${cat.categoryImage}`} // backend uploads folder
                             alt={cat.categoryName}
                             className="w-16 h-16 object-cover rounded-md border border-gray-300 dark:border-gray-700"
                             onError={(e) => { e.target.src = '/placeholder-image.jpg'; }} // fallback

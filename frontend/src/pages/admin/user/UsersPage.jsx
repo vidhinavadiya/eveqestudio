@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AdminSidebar from '../../../components/admin/AdminSidebar';
 
+        const API_URL = process.env.REACT_APP_API_URL;
+
 export default function UsersPage({ onLogout }) {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
@@ -21,7 +23,7 @@ const handleLogout = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/auth/admin/users', {
+      const res = await axios.get(`${API_URL}/api/auth/admin/users`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

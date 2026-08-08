@@ -11,11 +11,13 @@ export default function CustomerCoupons() {
   const [copiedId, setCopiedId] = useState(null);
 
   const token = localStorage.getItem('token');
+    const API_URL = process.env.REACT_APP_API_URL;
+
 
   useEffect(() => {
     const fetchCoupons = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/coupon/all', {
+        const res = await axios.get(`${API_URL}/api/coupon/all`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

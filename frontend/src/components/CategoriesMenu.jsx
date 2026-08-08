@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+        const API_URL = process.env.REACT_APP_API_URL;
+
 export default function CategoriesMenu({ isMobile }) {
   const [categories, setCategories] = useState([]);
   const [openMenu, setOpenMenu] = useState(false);
@@ -10,7 +12,7 @@ export default function CategoriesMenu({ isMobile }) {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/category/public');
+        const res = await axios.get(`${API_URL}/api/category/public`);
         setCategories(res.data.data || []);
       } catch {
         console.error('Failed to fetch categories');

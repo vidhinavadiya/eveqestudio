@@ -3,8 +3,9 @@ import { useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../../components/Navbar';
 
-const PRODUCT_API = 'http://localhost:5000/api/product/customer/products';
-const SUBCATEGORY_API = 'http://localhost:5000/api/subcategory/public';
+        const API_URL = process.env.REACT_APP_API_URL;
+const PRODUCT_API = `${API_URL}/api/product/customer/products`;
+const SUBCATEGORY_API = `${API_URL}/api/subcategory/public`;
 
 export default function Subcategories({ isLoggedIn, onLogout, darkMode, toggleDarkMode}) {
   const { categorySlug, subSlug } = useParams();
@@ -209,7 +210,7 @@ if (loading) {
           {subcategory?.subCategoryImage && (
             <div className="mb-8 transform hover:scale-105 transition-transform duration-700">
               <img
-                src={`http://localhost:5000/uploads/subcategories/${subcategory.subCategoryImage}`}
+                src={`${API_URL}/uploads/subcategories/${subcategory.subCategoryImage}`}
                 alt={subcategory.subCategoryName}
                 className="w-32 h-32 md:w-40 md:h-40 mx-auto object-cover rounded-2xl shadow-2xl ring-4 ring-white/50 dark:ring-gray-800/50"
               />
@@ -471,7 +472,7 @@ if (loading) {
       ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
       : 'grid-cols-1'}`}>
       {filteredProducts.map((product) => {
-        const BASE_URL = 'http://localhost:5000';
+        const BASE_URL = `${API_URL}`;
         const mainPath = product.images?.[0]?.fileUrl || '';
         const hoverPath = product.images?.[1]?.fileUrl || mainPath;
         const mainImage = mainPath ? `${BASE_URL}${mainPath}` : null;

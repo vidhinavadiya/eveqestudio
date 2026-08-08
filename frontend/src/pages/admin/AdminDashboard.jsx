@@ -11,6 +11,8 @@ import {
   ResponsiveContainer
 } from 'recharts';
 
+        const API_URL = process.env.REACT_APP_API_URL;
+
 function AdminDashboard({ onLogout }) {
   const navigate = useNavigate();
 
@@ -42,7 +44,7 @@ function AdminDashboard({ onLogout }) {
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/admin/dashboard',
+        const res = await axios.get(`${API_URL}/api/admin/dashboard`,
                   {
           headers: {
             Authorization: `Bearer ${token}`

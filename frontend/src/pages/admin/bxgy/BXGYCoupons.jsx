@@ -3,6 +3,8 @@ import axios from 'axios';
 import AdminSidebar from '../../../components/admin/AdminSidebar';
 import { toast } from 'react-hot-toast';
 
+        const API_URL = process.env.REACT_APP_API_URL;
+
 export default function BXGYCoupons({ onLogout }) {
   const [coupons, setCoupons] = useState([]);
   const [products, setProducts] = useState([]);
@@ -37,8 +39,8 @@ export default function BXGYCoupons({ onLogout }) {
     if (!token) return;
     try {
       const [prodRes, couponRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/product', { headers: { Authorization: `Bearer ${token}` } }),
-        axios.get('http://localhost:5000/api/bxgy-coupon', { headers: { Authorization: `Bearer ${token}` } }),
+        axios.get(`${API_URL}/api/product`, { headers: { Authorization: `Bearer ${token}` } }),
+        axios.get(`${API_URL}/api/bxgy-coupon`, { headers: { Authorization: `Bearer ${token}` } }),
       ]);
       setProducts(prodRes.data.data || []);
       setCoupons(couponRes.data.coupons || []);
@@ -74,8 +76,8 @@ export default function BXGYCoupons({ onLogout }) {
     e.preventDefault();
     const data = isEdit ? editCoupon : newCoupon;
     const url = isEdit 
-      ? `http://localhost:5000/api/bxgy-coupon/${selectedCoupon.id}` 
-      : 'http://localhost:5000/api/bxgy-coupon/add';
+      ? `${API_URL}/api/bxgy-coupon/${selectedCoupon.id}` 
+      : `${API_URL}/api/bxgy-coupon/add`;
     
     try {
       await axios[isEdit ? 'put' : 'post'](url, data, { headers: { Authorization: `Bearer ${token}` } });
@@ -92,7 +94,7 @@ export default function BXGYCoupons({ onLogout }) {
   const handleDelete = async () => {
     if (!selectedCoupon) return;
     try {
-      await axios.delete(`http://localhost:5000/api/bxgy-coupon/${selectedCoupon.id}`, {
+      await axios.delete(`${API_URL}/api/bxgy-coupon/${selectedCoupon.id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       toast.success("Coupon Deleted!");

@@ -48,8 +48,9 @@ const ProductViewCount = () => {
   );
 };
 
-const PRODUCT_DETAIL_API = 'http://localhost:5000/api/product/customer';
-const BASE_URL = 'http://localhost:5000';
+      const API_URL = process.env.REACT_APP_API_URL;
+const PRODUCT_DETAIL_API = `${API_URL}/api/product/customer`;
+const BASE_URL = `${API_URL}`;
 
 const ProductGallery = ({ images, product, BASE_URL, selectedImage, setSelectedImage }) => {
   const scrollRef = useRef(null);
@@ -234,7 +235,7 @@ useEffect(() => {
   const fetchRelated = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/product/related/${product.productId}`
+        `${API_URL}/api/product/related/${product.productId}`
       );
       console.log("Related products:", res.data.data);
       setRelatedProducts(res.data.data || []);
@@ -268,7 +269,7 @@ useEffect(() => {
       if (!token) return;
 
       try {
-        const res = await axios.get('http://localhost:5000/api/coupon/all', {
+        const res = await axios.get(`${API_URL}/api/coupon/all`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -1046,7 +1047,7 @@ if (loading) {
       {relatedProducts
         .filter((p) => p.category === product.category?.categoryName && p.productId !== product.productId)
         .map((product) => {
-          const BASE_URL = 'http://localhost:5000';
+          const BASE_URL = `${API_URL}`;
           const mainImage = product.images?.[0]?.fileUrl
             ? `${BASE_URL}${product.images[0].fileUrl}`
             : 'https://via.placeholder.com/400';

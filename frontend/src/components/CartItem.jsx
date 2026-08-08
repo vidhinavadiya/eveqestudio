@@ -2,8 +2,10 @@ import React from "react";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-hot-toast";
 
+        const API_URL = process.env.REACT_APP_API_URL;
+
 // Humne API_BASE ko yahan rakha hai
-const API_BASE = "http://localhost:5000";
+const API_BASE = `${API_URL}`;
 
 export default function CartItem({ item }) {
   const { updateQuantity, removeItem } = useCart();

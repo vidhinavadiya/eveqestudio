@@ -3,6 +3,8 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import AdminSidebar from '../../../components/admin/AdminSidebar';
 
+        const API_URL = process.env.REACT_APP_API_URL;
+
 export default function AdminOrders({ onLogout }) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -12,7 +14,7 @@ const fetchOrders = async () => {
   try {
     setLoading(true);
     const token = localStorage.getItem("token");
-    const res = await axios.get("http://localhost:5000/api/order/orders", {
+    const res = await axios.get(`${API_URL}/api/order/orders`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log("API Response:", res.data);           // ← yeh line add karo
@@ -36,7 +38,7 @@ const fetchOrders = async () => {
     try {
       const token = localStorage.getItem("token");
       await axios.patch(
-        `http://localhost:5000/api/order/orders/${orderId}/status`,
+        `${API_URL}/api/order/orders/${orderId}/status`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -169,14 +171,14 @@ const fetchOrders = async () => {
                                 <img
   src={
     item.productImage
-      ? `http://localhost:5000/${item.productImage.replace(/^\/+/, '')}`
-      : `http://localhost:5000/uploads/products/default-product-image.jpg`
+      ? `${API_URL}/${item.productImage.replace(/^\/+/, '')}`
+      : `${API_URL}/uploads/products/default-product-image.jpg`
   }
   alt={item.productName}
   className="w-12 h-12 object-cover rounded"
   onError={(e) => {
     if (!e.target.src.includes("default-product-image.jpg")) {
-      e.target.src = "http://localhost:5000/uploads/products/default-product-image.jpg";
+      e.target.src = `${API_URL}/uploads/products/default-product-image.jpg`;
     }
   }}
 />

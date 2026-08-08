@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useCart } from '../context/CartContext';
 import { toast } from 'react-hot-toast';
 
+        const API_URL = process.env.REACT_APP_API_URL;
+
+
 export default function BXGYCoupons({ onApplySuccess }) {
   const [bxgyCoupons, setBxgyCoupons] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +19,7 @@ export default function BXGYCoupons({ onApplySuccess }) {
   const fetchBXGY = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/bxgy-coupon', {
+      const res = await axios.get(`${API_URL}/api/bxgy-coupon`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       // Backend ab coupons ke saath product details bhi bhej raha hai
@@ -121,7 +124,7 @@ const confirmSelection = async (pId) => {
                         {/* ✅ Base URL ke saath image fix */}
 <img 
   src={product.productImage 
-    ? `http://localhost:5000${product.productImage}` 
+    ? `${API_URL}${product.productImage}` 
     : 'https://via.placeholder.com/150'} 
   className="w-full h-full object-cover group-hover:scale-110 transition-transform" 
   alt={product.productName} 

@@ -18,6 +18,7 @@ export default function Cart({ isLoggedIn, onLogout, darkMode, toggleDarkMode })
   const [couponsLoading, setCouponsLoading] = useState(false);
 
   const token = localStorage.getItem('token'); 
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function Cart({ isLoggedIn, onLogout, darkMode, toggleDarkMode })
       const fetchCoupons = async () => {
         setCouponsLoading(true);
         try {
-          const res = await axios.get('http://localhost:5000/api/coupon/all', {
+          const res = await axios.get(`${API_URL}/api/coupon/all`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           setCoupons(res.data.data || res.data || []);

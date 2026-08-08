@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminSidebar from '../../../components/admin/AdminSidebar';
 
+        const API_URL = process.env.REACT_APP_API_URL;
+
 export default function AdminSubcategories({ onLogout }) {
   const [subcategories, setSubcategories] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -32,8 +34,8 @@ export default function AdminSubcategories({ onLogout }) {
     const fetchData = async () => {
       try {
         const [catRes, subcatRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/category', { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get('http://localhost:5000/api/subcategory', { headers: { Authorization: `Bearer ${token}` } })
+          axios.get(`${API_URL}/api/category`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${API_URL}/api/subcategory`, { headers: { Authorization: `Bearer ${token}` } })
         ]);
         setCategories(catRes.data.data);
         setSubcategories(subcatRes.data.data);
@@ -68,7 +70,7 @@ export default function AdminSubcategories({ onLogout }) {
 
     try {
       if (selectedSubcategory) {
-        const res = await axios.put(`http://localhost:5000/api/subcategory/${selectedSubcategory.id}`, data, {
+        const res = await axios.put(`${API_URL}/api/subcategory/${selectedSubcategory.id}`, data, {
           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
         });
         // After updating subcategory
@@ -79,7 +81,7 @@ export default function AdminSubcategories({ onLogout }) {
         setSubcategories(subcategories.map(sc => sc.id === updatedSubcat.id ? updatedSubcat : sc));
         setSuccessMsg('Subcategory updated successfully!');
       } else {
-        const res = await axios.post('http://localhost:5000/api/subcategory', data, {
+        const res = await axios.post(`${API_URL}/api/subcategory`, data, {
           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
         });
         // Add category object manually
@@ -114,7 +116,7 @@ export default function AdminSubcategories({ onLogout }) {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/subcategory/${selectedSubcategory.id}`, {
+      await axios.delete(`${API_URL}/api/subcategory/${selectedSubcategory.id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSubcategories(subcategories.filter(sc => sc.id !== selectedSubcategory.id));
@@ -182,7 +184,7 @@ export default function AdminSubcategories({ onLogout }) {
                       <td className="px-6 py-4">
                         {sc.subCategoryImage ? (
                           <img
-                            src={`http://localhost:5000/uploads/subcategories/${sc.subCategoryImage}`}
+                            src={`${API_URL}/uploads/subcategories/${sc.subCategoryImage}`}
                             alt={sc.subCategoryName}
                             className="w-16 h-16 object-cover rounded-md border border-gray-300 dark:border-gray-700"
                           />

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdminSidebar from "../../../components/admin/AdminSidebar";
 
+        const API_URL = process.env.REACT_APP_API_URL;
+
 export default function Faqs({ onLogout }) {
   const [faqs, setFaqs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,7 +29,7 @@ export default function Faqs({ onLogout }) {
   });
 
   const token = localStorage.getItem("token");
-  const API = "http://localhost:5000/api/faqs/admin";
+  const API = `${API_URL}/api/faqs/admin`;
 
   // Fetch FAQs
   useEffect(() => {

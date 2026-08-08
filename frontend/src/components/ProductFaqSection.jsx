@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000";
+        const API_URL = process.env.REACT_APP_API_URL;
+
+const BASE_URL = `${API_URL}`;
 
 export default function ProductFaqSection({ darkMode }) {
   const [faqs, setFaqs] = useState([]);
