@@ -19,17 +19,17 @@ module.exports = {
     dialect: "mysql",
   },
 
-  production: {
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME_PRODUCTION,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT || 3306,
-    dialect: "mysql",
-    dialectOptions: {
-      ssl: {
-        rejectUnauthorized: true,
-      },
-    },
-  },
+production: {
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME_PRODUCTION,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT || 3306,
+  dialect: 'mysql',
+  dialectOptions: {
+    ssl: {
+      rejectUnauthorized: false
+    }
+  }
+}
 };

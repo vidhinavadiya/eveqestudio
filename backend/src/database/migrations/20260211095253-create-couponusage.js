@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Coupons',
+          model: 'coupons',
           key: 'id'
         },
         onDelete: 'CASCADE'
