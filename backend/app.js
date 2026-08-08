@@ -54,7 +54,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // CORS
 app.use(cors({
-  origin: 'http://localhost:3001',
+  origin: ['http://localhost:3001',
+    'https://eveqestudio.vercel.app',
+  ],
   credentials: true
 }));
 
