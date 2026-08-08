@@ -17,6 +17,7 @@ export default function AuthPage({ onLoginSuccess }) {
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [forgotStep, setForgotStep] = useState('email');
   const [forgotMessage, setForgotMessage] = useState('');
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,8 +32,8 @@ export default function AuthPage({ onLoginSuccess }) {
     }
 
     const url = isLogin
-      ? 'http://localhost:5000/api/auth/login'
-      : 'http://localhost:5000/api/auth/register';
+  ? `${API_URL}/api/auth/login`
+  : `${API_URL}/api/auth/register`;
 
     const body = isLogin
       ? { email: formData.email, password: formData.password }
@@ -90,11 +91,11 @@ export default function AuthPage({ onLoginSuccess }) {
 
     if (forgotStep === 'email') {
       try {
-        const res = await fetch('http://localhost:5000/api/auth/forgot-password', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: forgotEmail })
-        });
+        const res = await fetch(`${API_URL}/api/auth/forgot-password`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ email: forgotEmail })
+});
 
         const data = await res.json();
 
@@ -112,15 +113,15 @@ export default function AuthPage({ onLoginSuccess }) {
       }
 
       try {
-        const res = await fetch('http://localhost:5000/api/auth/reset-password', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: forgotEmail,
-            otp,
-            newPassword
-          })
-        });
+        const res = await fetch(`${API_URL}/api/auth/reset-password`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    email: forgotEmail,
+    otp,
+    newPassword
+  })
+});
 
         const data = await res.json();
 
