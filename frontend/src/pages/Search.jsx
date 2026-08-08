@@ -4,8 +4,9 @@ import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
-const PRODUCT_API = `${API_URL}/api/product/customer/products`;
         const API_URL = process.env.REACT_APP_API_URL;
+
+const PRODUCT_API = `${API_URL}/api/product/customer/products`;
 
 
 export default function Search({ isLoggedIn, onLogout, darkMode, toggleDarkMode }) {

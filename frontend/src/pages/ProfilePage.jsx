@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
+      const API_URL = process.env.REACT_APP_API_URL;
+
 export default function ProfilePage({ isLoggedIn, onLogout }) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -20,7 +22,6 @@ export default function ProfilePage({ isLoggedIn, onLogout }) {
   const [isEditing, setIsEditing] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
   const [saveError, setSaveError] = useState('');
-      const API_URL = process.env.REACT_APP_API_URL;
 
   // Redirect if not logged in
   useEffect(() => {

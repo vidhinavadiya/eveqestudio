@@ -8,6 +8,8 @@ import Hero1 from '../../src/assets/images/hero1.jpg';
 import Hero2 from '../../src/assets/images/hero2.jpg';
 import Hero3 from '../../src/assets/images/hero3.jpg';
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
 // Fir array mein unhe use karein
 const heroImages = [
   Hero1,
@@ -21,7 +23,6 @@ export default function HomePage({ isLoggedIn, onLogout, darkMode, toggleDarkMod
   const productsScrollRef = useRef(null);
   const autoScrollIntervalRef = useRef(null);
   const [isUserInteracting, setIsUserInteracting] = useState(false);
-  const API_URL = process.env.REACT_APP_API_URL;
 
   const [reviews, setReviews] = useState([]);
 const reviewsScrollRef = useRef(null);

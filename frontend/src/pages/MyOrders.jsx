@@ -3,10 +3,11 @@ import axios from 'axios';
 import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
 
+      const API_URL = process.env.REACT_APP_API_URL;
+
 const MyOrders = ({ isLoggedIn, onLogout, darkMode, toggleDarkMode }) => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
-      const API_URL = process.env.REACT_APP_API_URL;
 
 
     useEffect(() => {
