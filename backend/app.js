@@ -8,7 +8,10 @@ var cookieParser = require('cookie-parser');
 var morgan = require('morgan'); // ← morgan का नाम अलग रखा
 const winstonLogger = require('./src/utils/logger'); // ← winston का नाम अलग रखा (conflict हटा)
 
-require('./src/database/config/db');
+const { connectDB } = require('./src/database/config/db');
+
+connectDB();
+
 
 var indexRouter = require('./src/routes/index');
 var usersRouter = require('./src/routes/users');
