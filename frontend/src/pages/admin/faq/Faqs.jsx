@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdminSidebar from "../../../components/admin/AdminSidebar";
 
-        const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL || "";
+const FAQ_API = `${API_URL}/api/faqs/admin`;
 
 export default function Faqs({ onLogout }) {
   const [faqs, setFaqs] = useState([]);
@@ -29,25 +30,25 @@ export default function Faqs({ onLogout }) {
   });
 
   const token = localStorage.getItem("token");
-  const API = `${API_URL}/api/faqs/admin`;
 
   // Fetch FAQs
-  useEffect(() => {
-    const fetchFaqs = async () => {
-      try {
-        const res = await axios.get(API, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setFaqs(res.data.data || []);
-      } catch (err) {
-        setError(err.response?.data?.message || "Failed to load FAQs");
-      } finally {
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  const fetchFaqs = async () => {
+    try {
+      const res = await axios.get(FAQ_API, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-    if (token) fetchFaqs();
-  }, [token]);
+      setFaqs(res.data.data || []);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to load FAQs");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (token) fetchFaqs();
+}, [token]);
 
   // Add FAQ
   const handleAdd = async (e) => {
