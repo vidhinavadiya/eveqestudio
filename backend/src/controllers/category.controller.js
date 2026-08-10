@@ -1,4 +1,5 @@
 const CategoryService = require('../services/category.service');
+const { uploadToCloudinary } = require('../utils/cloudinaryUpload');
 
 class CategoryController {
   // GET /categories
@@ -41,8 +42,13 @@ class CategoryController {
   static async createCategory(req, res) {
     try {
       const data = { ...req.body };
-      if (req.file) {
-        data.categoryImage = req.file.filename;
+        if (req.file) {
+        const uploadedImage = await uploadToCloudinary(
+          req.file.buffer,
+          "eveqe/categories"
+        );
+
+        data.categoryImage = uploadedImage.secure_url;
       }
       const category = await CategoryService.createCategory(data);
       res.status(201).json({
@@ -60,8 +66,13 @@ class CategoryController {
   static async updateCategory(req, res) {
     try {
       const data = { ...req.body };
-      if (req.file) {
-        data.categoryImage = req.file.filename;
+          if (req.file) {
+        const uploadedImage = await uploadToCloudinary(
+          req.file.buffer,
+          "eveqe/categories"
+        );
+
+        data.categoryImage = uploadedImage.secure_url;
       }
       const category = await CategoryService.updateCategory(req.params.id, data);
       res.status(200).json({ 

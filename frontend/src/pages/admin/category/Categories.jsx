@@ -56,71 +56,166 @@ export default function Categories({ onLogout }) {
   }, [token]);
 
   // Add new category (slug backend generate karega)
-  const handleAddCategory = async (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccessMsg('');
+const handleAddCategory = async (e) => {
+  e.preventDefault();
+  setError('');
+  setSuccessMsg('');
 
-    if (!newCategory.categoryName.trim()) {
-      return setError('Category Name is required');
-    }
+  if (!newCategory.categoryName.trim()) {
+    return setError('Category Name is required');
+  }
 
-    const formData = new FormData();
-    formData.append('categoryName', newCategory.categoryName.trim());
-    if (newCategory.categorySlug.trim()) formData.append('categorySlug', newCategory.categorySlug.trim().toLowerCase().replace(/\s+/g, '-'));
-    if (newCategory.categoryDescription.trim()) formData.append('categoryDescription', newCategory.categoryDescription.trim());
-    formData.append('status', newCategory.status ? true : false);
-    if (newCategory.categoryImage) formData.append('categoryImage', newCategory.categoryImage);
+  const formData = new FormData();
 
-    try {
-      const res = await axios.post(`${API_URL}/api/category`, formData, {
+  formData.append(
+    'categoryName',
+    newCategory.categoryName.trim()
+  );
+
+  if (newCategory.categorySlug.trim()) {
+    formData.append(
+      'categorySlug',
+      newCategory.categorySlug
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+    );
+  }
+
+  if (newCategory.categoryDescription.trim()) {
+    formData.append(
+      'categoryDescription',
+      newCategory.categoryDescription.trim()
+    );
+  }
+
+  formData.append(
+    'status',
+    newCategory.status ? 'true' : 'false'
+  );
+
+  if (newCategory.categoryImage) {
+    formData.append(
+      'categoryImage',
+      newCategory.categoryImage
+    );
+  }
+
+  try {
+    const res = await axios.post(
+      `${API_URL}/api/category`,
+      formData,
+      {
         headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
+          Authorization: `Bearer ${token}`
         }
-      });
+      }
+    );
 
-      setCategories([...categories, res.data.data || res.data]);
-      setShowAddModal(false);
-      setNewCategory({ categoryName: '', categorySlug: '', categoryDescription: '', status: 'active', categoryImage: null });
-      setSuccessMsg('Category added successfully!');
-    } catch (err) {
-      setError(err.response?.data?.message || 'Failed to add category');
-    }
-  };
+    setCategories([
+      ...categories,
+      res.data.data || res.data
+    ]);
+
+    setShowAddModal(false);
+
+    setNewCategory({
+      categoryName: '',
+      categorySlug: '',
+      categoryDescription: '',
+      status: true,
+      categoryImage: null
+    });
+
+    setSuccessMsg('Category added successfully!');
+  } catch (err) {
+    console.error('Add Category Error:', err);
+
+    setError(
+      err.response?.data?.message ||
+      'Failed to add category'
+    );
+  }
+};
 
   // Update category
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccessMsg('');
+const handleUpdate = async (e) => {
+  e.preventDefault();
+  setError('');
+  setSuccessMsg('');
 
-    if (!editForm.categoryName.trim()) {
-      return setError('Category Name is required');
-    }
+  if (!editForm.categoryName.trim()) {
+    return setError('Category Name is required');
+  }
 
-    const formData = new FormData();
-    formData.append('categoryName', editForm.categoryName.trim());
-    if (editForm.categorySlug.trim()) formData.append('categorySlug', editForm.categorySlug.trim().toLowerCase().replace(/\s+/g, '-'));
-    if (editForm.categoryDescription.trim()) formData.append('categoryDescription', editForm.categoryDescription.trim());
-    formData.append('status', newCategory.status ? true : false);
-    if (editForm.categoryImage) formData.append('categoryImage', editForm.categoryImage);
+  const formData = new FormData();
 
-    try {
-      const res = await axios.put(`${API_URL}/api/category/${selectedCategory.id}`, formData, {
+  formData.append(
+    'categoryName',
+    editForm.categoryName.trim()
+  );
+
+  if (editForm.categorySlug.trim()) {
+    formData.append(
+      'categorySlug',
+      editForm.categorySlug
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+    );
+  }
+
+  if (editForm.categoryDescription.trim()) {
+    formData.append(
+      'categoryDescription',
+      editForm.categoryDescription.trim()
+    );
+  }
+
+  // IMPORTANT: editForm.status
+  formData.append(
+    'status',
+    editForm.status ? 'true' : 'false'
+  );
+
+  if (editForm.categoryImage) {
+    formData.append(
+      'categoryImage',
+      editForm.categoryImage
+    );
+  }
+
+  try {
+    const res = await axios.put(
+      `${API_URL}/api/category/${selectedCategory.id}`,
+      formData,
+      {
         headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
+          Authorization: `Bearer ${token}`
         }
-      });
+      }
+    );
 
-      setCategories(categories.map(cat => cat.id === selectedCategory.id ? res.data.data || res.data : cat));
-      setShowEditModal(false);
-      setSuccessMsg('Category updated successfully!');
-    } catch (err) {
-      setError(err.response?.data?.message || 'Failed to update category');
-    }
-  };
+    setCategories(
+      categories.map((cat) =>
+        cat.id === selectedCategory.id
+          ? res.data.data || res.data
+          : cat
+      )
+    );
+
+    setShowEditModal(false);
+
+    setSuccessMsg('Category updated successfully!');
+  } catch (err) {
+    console.error('Update Category Error:', err);
+
+    setError(
+      err.response?.data?.message ||
+      'Failed to update category'
+    );
+  }
+};
 
   // Delete category
   const handleDelete = async () => {
@@ -205,12 +300,14 @@ export default function Categories({ onLogout }) {
                       <td className="px-6 py-4 text-gray-900 dark:text-gray-200">{cat.productCount || 0}</td>
                       <td className="px-6 py-4">
                         {cat.categoryImage ? (
-                          <img
-                            src={`${API_URL}/uploads/categories/${cat.categoryImage}`} // backend uploads folder
-                            alt={cat.categoryName}
-                            className="w-16 h-16 object-cover rounded-md border border-gray-300 dark:border-gray-700"
-                            onError={(e) => { e.target.src = '/placeholder-image.jpg'; }} // fallback
-                          />
+                         <img
+  src={cat.categoryImage}
+  alt={cat.categoryName}
+  className="w-16 h-16 object-cover rounded-md border border-gray-300 dark:border-gray-700"
+  onError={(e) => {
+    e.currentTarget.src = '/placeholder-image.jpg';
+  }}
+/>
                         ) : (
                           <span className="text-gray-500 dark:text-gray-400">No image</span>
                         )}

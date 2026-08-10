@@ -1,4 +1,5 @@
 const SubcategoryService = require('../services/subcategory.service');
+const { uploadToCloudinary } = require('../utils/cloudinaryUpload');
 
 class SubcategoryController {
   //only active subcategories
@@ -58,7 +59,12 @@ class SubcategoryController {
     try {
       const data = { ...req.body };
       if (req.file) {
-        data.subCategoryImage = req.file.filename;
+        const uploadedImage = await uploadToCloudinary(
+          req.file.buffer,
+          "eveqe/subcategories"
+        );
+
+        data.subCategoryImage = uploadedImage.secure_url;
       }
       const subcategory = await SubcategoryService.createSubcategory(data);
       res.status(201).json({ 
@@ -76,7 +82,14 @@ class SubcategoryController {
   static async updateSubcategory(req, res) {
     try {
       const data = { ...req.body };
-      if (req.file) data.subCategoryImage = req.file.filename;
+      if (req.file) {
+        const uploadedImage = await uploadToCloudinary(
+          req.file.buffer,
+          "eveqe/subcategories"
+        );
+
+        data.subCategoryImage = uploadedImage.secure_url;
+      }
       const subcategory = await SubcategoryService.updateSubcategory(req.params.id, data);
       if (!subcategory) {
         return res.status(404).json({ 

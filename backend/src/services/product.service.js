@@ -1,5 +1,9 @@
 const db = require('../database/models');
 const ProductRepository = require('../repositories/product.repository');
+const { uploadToCloudinary } = require('../utils/cloudinaryUpload');
+const {
+  deleteFromCloudinary
+} = require("../helpers/cloudinary.helper");
 const sequelize = db.sequelize;
 
 const { 
@@ -34,8 +38,46 @@ class ProductService {
         }
       });
 
-      const imageFiles = files?.productImages || [];
-      const videoFiles = files?.productVideos || [];
+const uploadedMedia = [];
+
+const images = files?.productImages || [];
+const videos = files?.productVideos || [];
+
+// Upload Images
+for (const file of images) {
+  const uploaded = await uploadToCloudinary(
+    file.buffer,
+    'eveqestudio/products/images',
+    'image'
+  );
+
+  uploadedMedia.push({
+    fileUrl: uploaded.secure_url,
+    fileType: 'image',
+    publicId: uploaded.public_id,
+    resourceType: uploaded.resource_type,
+    fileName: file.originalname,
+    mimeType: file.mimetype
+  });
+}
+
+// Upload Videos
+for (const file of videos) {
+  const uploaded = await uploadToCloudinary(
+    file.buffer,
+    'eveqestudio/products/videos',
+    'video'
+  );
+
+  uploadedMedia.push({
+    fileUrl: uploaded.secure_url,
+    fileType: 'video',
+    publicId: uploaded.public_id,
+    resourceType: uploaded.resource_type,
+    fileName: file.originalname,
+    mimeType: file.mimetype
+  });
+}
 
       const productData = {
         productName:        parsed.productName || '',
@@ -71,18 +113,7 @@ class ProductService {
                         : 0,
         material: parsed.material || null,
 
-       images: [
-          ...imageFiles.map((file, i) => ({
-            fileUrl: `/uploads/products/${file.filename}`,
-            fileType: 'image',
-            isPrimary: i === 0
-          })),
-          ...videoFiles.map((file) => ({
-            fileUrl: `/uploads/products/${file.filename}`,
-            fileType: 'video',
-            isPrimary: false
-          }))
-        ],
+      images: uploadedMedia,
 
         keyPoints: (parsed.keyPoints || []).map(kp => ({
           pointText: kp.pointText || '',
@@ -211,7 +242,50 @@ static async updateProduct(id, payload, files) {
     };
 
     // 3. Call repository with safe top-level data
-    const updated = await ProductRepository.updateProduct(id, safeData, files, transaction);
+const imageFiles = files?.productImages || [];
+const videoFiles = files?.productVideos || [];
+
+const uploadedImages = await Promise.all(
+  imageFiles.map(async (file) => {
+    const result = await uploadToCloudinary(
+      file.buffer,
+      'eveqestudio/products/images',
+      'image'
+    );
+
+    return {
+      fileUrl: result.secure_url,
+      fileType: 'image'
+    };
+  })
+);
+
+const uploadedVideos = await Promise.all(
+  videoFiles.map(async (file) => {
+    const result = await uploadToCloudinary(
+      file.buffer,
+      'eveqestudio/products/videos',
+      'video'
+    );
+
+    return {
+      fileUrl: result.secure_url,
+      fileType: 'video'
+    };
+  })
+);
+
+const media = [
+  ...uploadedImages,
+  ...uploadedVideos
+];
+
+const updated = await ProductRepository.updateProduct(
+  id,
+  safeData,
+  media,
+  transaction
+);
 
     await transaction.commit();
     return updated;

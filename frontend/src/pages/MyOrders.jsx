@@ -5,6 +5,56 @@ import { Link } from 'react-router-dom';
 
       const API_URL = process.env.REACT_APP_API_URL;
 
+      const getImageUrl = (item) => {
+    if (!item) {
+        return 'https://placehold.co/300x300?text=No+Image';
+    }
+
+    // New Cloudinary structure
+    const cloudinaryImage = item.product?.images?.find(
+        (image) => image?.fileType === 'image'
+    );
+
+    if (cloudinaryImage?.fileUrl) {
+        return cloudinaryImage.fileUrl;
+    }
+
+    // First product image
+    const productImage = item.product?.images?.[0]?.fileUrl;
+
+    if (productImage) {
+        if (
+            productImage.startsWith('http://') ||
+            productImage.startsWith('https://')
+        ) {
+            return productImage;
+        }
+
+        return `${API_URL}${productImage.startsWith('/') ? '' : '/'}${productImage}`;
+    }
+
+    // Existing/order item image
+    const image =
+        item.productImage ||
+        item.image ||
+        item.productId?.images?.[0]?.fileUrl;
+
+    if (image) {
+        // Cloudinary / external URL
+        if (
+            image.startsWith('http://') ||
+            image.startsWith('https://')
+        ) {
+            return image;
+        }
+
+        // Old local image
+        return `${API_URL}${image.startsWith('/') ? '' : '/'}${image}`;
+    }
+
+    return 'https://placehold.co/300x300?text=No+Image';
+};
+
 const MyOrders = ({ isLoggedIn, onLogout, darkMode, toggleDarkMode }) => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -108,19 +158,16 @@ const MyOrders = ({ isLoggedIn, onLogout, darkMode, toggleDarkMode }) => {
                                             {order.items && order.items.map((item, idx) => (
                                                 <div key={idx} className="flex items-center gap-4">
                                                     <div className="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden flex-shrink-0 border dark:border-gray-700">
-                                                        <img 
-  src={
-    item.productImage
-      ? `${API_URL}/${item.productImage.replace(/^\/+/, '')}`
-      : `${API_URL}/uploads/products/default-product-image.jpg`
-  }
-  alt={item.productName}
-  className="w-full h-full object-cover"
-onError={(e) => {
-  if (!e.target.src.includes("default-product-image.jpg")) {
-    e.target.src = `${API_URL}/uploads/products/default-product-image.jpg`;
-  }
-}}
+                                                        <img
+    src={getImageUrl(item)}
+    alt={item.productName || 'Product'}
+    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+    onError={(e) => {
+        console.log('My Orders image failed:', getImageUrl(item));
+
+        e.currentTarget.src =
+            'https://placehold.co/300x300?text=No+Image';
+    }}
 />
                                                     </div>
                                                     <div>

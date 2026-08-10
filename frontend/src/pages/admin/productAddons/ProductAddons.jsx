@@ -5,7 +5,6 @@ import AdminSidebar from '../../../components/admin/AdminSidebar';
         const API_URL = process.env.REACT_APP_API_URL;
 
 const API_BASE = `${API_URL}/api/link`; // ← your route
-const BASE_MEDIA_URL = `${API_URL}`;   // adjust if needed
 
 export default function ProductAddons({ onLogout }) {
   const [addons, setAddons] = useState([]);
@@ -76,33 +75,60 @@ useEffect(() => {
     }
   };
 
-  const resetForm = () => {
-    setFormData({
-      title: '',
-      productId: '',
-      image: null,
-      supportLinks: [{ title: '', link: '' }],
-      points: [{ point: '' }],
-    });
-    setPreviewImage(null);
-    setExistingImage(null);
-    setIsEditMode(false);
-    setEditId(null);
-    setCurrentStep(1);
-  };
+const resetForm = () => {
+  if (previewImage) {
+    URL.revokeObjectURL(previewImage);
+  }
+
+  setFormData({
+    title: '',
+    productId: '',
+    image: null,
+    supportLinks: [{ title: '', link: '' }],
+    points: [{ point: '' }],
+  });
+
+  setPreviewImage(null);
+  setExistingImage(null);
+  setIsEditMode(false);
+  setEditId(null);
+  setCurrentStep(1);
+};
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFormData((prev) => ({ ...prev, image: file }));
-      setPreviewImage(URL.createObjectURL(file));
-    }
-  };
+const handleImageChange = (e) => {
+  const file = e.target.files?.[0];
+
+  if (!file) return;
+
+  // Validate image
+  if (!file.type.startsWith("image/")) {
+    setError("Please select a valid image file.");
+    return;
+  }
+
+  // Optional 5MB validation
+  if (file.size > 5 * 1024 * 1024) {
+    setError("Image size must be less than 5MB.");
+    return;
+  }
+
+  setError(null);
+
+  // Store actual file for FormData
+  setFormData((prev) => ({
+    ...prev,
+    image: file,
+  }));
+
+  // Create local preview
+  const imageUrl = URL.createObjectURL(file);
+  setPreviewImage(imageUrl);
+};
 
   // ──────────────────────────────────────────────
   // Support Links helpers
@@ -218,7 +244,7 @@ if (formData.image) {
         : [{ point: '' }],
     });
 
-setExistingImage(addon.image ? `${BASE_MEDIA_URL}/uploads/product-addons/${addon.image}` : null);
+setExistingImage(addon.image || null);
     setPreviewImage(null);
 
     setEditId(addon.id);
@@ -300,14 +326,14 @@ setExistingImage(addon.image ? `${BASE_MEDIA_URL}/uploads/product-addons/${addon
 <td className="px-6 py-4">
   {addon.image ? (
     <img
-src={`${BASE_MEDIA_URL}/uploads/product-addons/${addon.image}`}
-      alt={addon.title || 'Addon image'}
-      className="h-16 w-16 object-cover rounded border border-gray-300 dark:border-gray-600"
-      onError={(e) => {
-        e.target.src = 'https://via.placeholder.com/64?text=No+Image'; // fallback
-        e.target.alt = 'Image not found';
-      }}
-    />
+  src={addon.image}
+  alt={addon.title || 'Addon image'}
+  className="h-16 w-16 object-cover rounded border border-gray-300 dark:border-gray-600"
+  onError={(e) => {
+    e.target.src = 'https://via.placeholder.com/64?text=No+Image';
+    e.target.alt = 'Image not found';
+  }}
+/>
   ) : (
     <div className="h-16 w-16 bg-gray-200 dark:bg-gray-700 rounded flex items-center justify-center text-xs text-gray-500">
       No Img

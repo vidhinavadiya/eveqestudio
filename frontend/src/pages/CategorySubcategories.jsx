@@ -6,6 +6,24 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
   const API_URL = process.env.REACT_APP_API_URL;
 
+  export const getImageUrl = (fileUrl) => {
+  if (!fileUrl) return '';
+
+  // Cloudinary / any external full URL
+  if (
+    fileUrl.startsWith('http://') ||
+    fileUrl.startsWith('https://')
+  ) {
+    return fileUrl;
+  }
+
+  // Old/local backend path support
+  if (fileUrl.startsWith('/')) {
+    return `${API_URL}${fileUrl}`;
+  }
+
+  return `${API_URL}/${fileUrl}`;
+};
 
 const SUBCATEGORY_API = `${API_URL}/api/subcategory/public`;
 const PRODUCT_API = `${API_URL}/api/product/customer/products`;
@@ -271,9 +289,9 @@ export default function CategorySubcategories({ isLoggedIn, onLogout, darkMode, 
                   <div className="relative aspect-square overflow-hidden">
                     <img
                       src={
-                        sub.subCategoryImage
-                          ? `${API_URL}/uploads/subcategories/${sub.subCategoryImage}`
-                          : `https://via.placeholder.com/300?text=${encodeURIComponent(sub.subCategoryName)}`
+                       sub.subCategoryImage
+  ? getImageUrl(sub.subCategoryImage)
+  : `https://via.placeholder.com/300?text=${encodeURIComponent(sub.subCategoryName)}`
                       }
                       alt={sub.subCategoryName}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -321,8 +339,8 @@ export default function CategorySubcategories({ isLoggedIn, onLogout, darkMode, 
 
               {products.map((product) => {
                 const mainImage = product.images?.[0]?.fileUrl
-                  ? `${API_URL}${product.images[0].fileUrl}`
-                  : 'https://via.placeholder.com/400?text=Product';
+  ? getImageUrl(product.images[0].fileUrl)
+  : 'https://via.placeholder.com/400?text=Product';
 
                 return (
                   <Link

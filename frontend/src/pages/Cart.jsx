@@ -168,8 +168,7 @@ export default function Cart({ isLoggedIn, onLogout, darkMode, toggleDarkMode })
         cartItemCount={cartItemCount}
       />
 
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800 pt-20 md:pt-24 pb-16 px-5 sm:px-8 lg:px-12">
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-10 md:mb-12 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-500 animate-fade-in text-center lg:text-left">
+<div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800 pt-28 md:pt-32 pb-16 px-5 sm:px-8 lg:px-12">        <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-10 md:mb-12 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-500 animate-fade-in text-center lg:text-left">
           Your Shopping Cart
         </h1>
 

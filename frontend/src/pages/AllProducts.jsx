@@ -5,7 +5,28 @@ import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import heroBg from '../assets/images/hero3.jpg';
-  const API_URL = process.env.REACT_APP_API_URL;
+
+const API_URL = process.env.REACT_APP_API_URL;
+
+export const getImageUrl = (imagePath) => {
+  if (!imagePath) {
+    return 'https://placehold.co/400x400?text=No+Image';
+  }
+
+  // Cloudinary / external full URL
+  if (
+    imagePath.startsWith('http://') ||
+    imagePath.startsWith('https://')
+  ) {
+    return imagePath;
+  }
+
+  // Local backend image path
+  const cleanPath = imagePath.replace(/^\/+/, '');
+
+  return `${API_URL}/${cleanPath}`;
+};
+
 
 const PRODUCT_API = `${API_URL}/api/product/customer/products`;
 
@@ -304,13 +325,11 @@ export default function AllProducts({ isLoggedIn, onLogout, darkMode, toggleDark
               `}
             >
               {filteredProducts.map((product, index) => {
-                const BASE_URL = `${API_URL}`;
-                const img = product.images?.[0]?.fileUrl
-                  ? `${BASE_URL}${product.images[0].fileUrl}`
-                  : 'https://via.placeholder.com/400?text=Product';
-                const hoverImg = product.images?.[1]?.fileUrl
-                  ? `${BASE_URL}${product.images[1].fileUrl}`
-                  : img;
+                const img = getImageUrl(product.images?.[0]?.fileUrl);
+
+const hoverImg = product.images?.[1]?.fileUrl
+  ? getImageUrl(product.images[1].fileUrl)
+  : img;
 
                 const ratingInfo = ratingsMap[product.productId] || { avg: 0, count: 0 };
 
@@ -349,10 +368,13 @@ export default function AllProducts({ isLoggedIn, onLogout, darkMode, toggleDark
 
                       {hoverImg !== img && (
                         <img
-                          src={hoverImg}
-                          alt={`${product.productName} alt`}
-                          className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                        />
+  src={img}
+  alt={product.productName}
+  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:opacity-90"
+  onError={(e) => {
+    e.currentTarget.src = 'https://placehold.co/400x400?text=No+Image';
+  }}
+/>
                       )}
 
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0" />

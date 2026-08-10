@@ -10,6 +10,19 @@ import Hero3 from '../../src/assets/images/hero3.jpg';
 
   const API_URL = process.env.REACT_APP_API_URL;
 
+  const getImageUrl = (url) => {
+  if (!url) return '';
+
+  if (
+    url.startsWith('http://') ||
+    url.startsWith('https://')
+  ) {
+    return url;
+  }
+
+  return `${API_URL}${url}`;
+};
+
 // Fir array mein unhe use karein
 const heroImages = [
   Hero1,
@@ -189,6 +202,8 @@ useEffect(() => {
       ).toFixed(1)
     : 0;
 
+
+    
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
       <Navbar isLoggedIn={isLoggedIn} onLogout={onLogout} darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
@@ -253,9 +268,11 @@ useEffect(() => {
   className="flex gap-2.5 sm:gap-3 md:gap-4 overflow-x-auto pb-5 pt-1 px-3 sm:px-4 md:px-6 lg:px-8 scrollbar-hide scroll-smooth snap-x snap-mandatory"
 >
         {categories.map((category) => {
-          const imageUrl = category.categoryImage 
-            ? `${API_URL}/uploads/categories/${category.categoryImage}` 
-            : `https://via.placeholder.com/280x350?text=${encodeURIComponent(category.categoryName)}`;
+          const imageUrl = category.categoryImage
+  ? getImageUrl(category.categoryImage)
+  : `https://via.placeholder.com/280x350?text=${encodeURIComponent(
+      category.categoryName
+    )}`;
 
           return (
             <Link
@@ -377,13 +394,13 @@ useEffect(() => {
           className="flex gap-5 sm:gap-6 md:gap-8 lg:gap-10 overflow-x-auto pb-10 md:pb-12 pt-2 px-2 md:px-4 scroll-smooth scrollbar-hide snap-x snap-mandatory touch-pan-x"
         >
           {products.map((product, index) => {
-            const BASE_URL = `${API_URL}`;
             const img = product.images?.[0]?.fileUrl
-              ? `${BASE_URL}${product.images[0].fileUrl}`
-              : 'https://via.placeholder.com/400?text=Product';
-            const hoverImg = product.images?.[1]?.fileUrl
-              ? `${BASE_URL}${product.images[1].fileUrl}`
-              : img;
+  ? getImageUrl(product.images[0].fileUrl)
+  : 'https://via.placeholder.com/400?text=Product';
+
+const hoverImg = product.images?.[1]?.fileUrl
+  ? getImageUrl(product.images[1].fileUrl)
+  : img;
 
             return (
               <Link
@@ -567,8 +584,8 @@ useEffect(() => {
             );
 
             const pImg = validImage
-              ? `${API_URL}${validImage.fileUrl}`
-              : "https://via.placeholder.com/300x300?text=No+Image";
+  ? getImageUrl(validImage.fileUrl)
+  : "https://via.placeholder.com/300x300?text=No+Image";
 
             const uName =
               review.user?.username ||

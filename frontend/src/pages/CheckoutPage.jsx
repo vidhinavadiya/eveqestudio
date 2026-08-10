@@ -4,6 +4,55 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import Navbar from '../components/Navbar';
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
+const getImageUrl = (item) => {
+  if (!item) {
+    return "https://placehold.co/300x300?text=No+Image";
+  }
+
+  // New Cloudinary image structure
+  const cloudinaryImage = item.product?.images?.find(
+    (image) => image?.fileType === "image"
+  );
+
+  if (cloudinaryImage?.fileUrl) {
+    return cloudinaryImage.fileUrl;
+  }
+
+  // First product image
+  const productImage = item.product?.images?.[0]?.fileUrl;
+
+  if (productImage) {
+    if (
+      productImage.startsWith("http://") ||
+      productImage.startsWith("https://")
+    ) {
+      return productImage;
+    }
+
+    return `${API_URL}${productImage.startsWith("/") ? "" : "/"}${productImage}`;
+  }
+
+  // Old cart structure
+  const image =
+    item.productImage ||
+    item.image ||
+    item.productId?.images?.[0]?.fileUrl;
+
+  if (image) {
+    if (
+      image.startsWith("http://") ||
+      image.startsWith("https://")
+    ) {
+      return image;
+    }
+
+    return `${API_URL}${image.startsWith("/") ? "" : "/"}${image}`;
+  }
+
+  return "https://placehold.co/300x300?text=No+Image";
+};
 
 export default function Checkout({ isLoggedIn, onLogout, darkMode, toggleDarkMode }) {
   const location = useLocation();
@@ -12,7 +61,6 @@ export default function Checkout({ isLoggedIn, onLogout, darkMode, toggleDarkMod
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [placedOrderDetails, setPlacedOrderDetails] = useState(null);
-  const API_URL = process.env.REACT_APP_API_URL;
 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -225,20 +273,16 @@ const handleSubmit = async (e) => {
               {cart.items.map(item => (
                 <div key={item.id} className="flex items-center gap-4 py-2">
                   <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-xl flex-shrink-0 overflow-hidden border border-gray-200 dark:border-gray-700">
-<img 
-  src={
-    item.productImage
-      ? `${API_URL}/${item.productImage.replace(/^\/+/, '')}`
-      : `${API_URL}/uploads/products/default-product-image.jpg`
-  }
-  alt={item.productName}
-  className="w-full h-full object-cover"
+<img
+  src={getImageUrl(item)}
+  alt={item.productName || "Product"}
+  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
   onError={(e) => {
-    if (!e.target.src.includes("default-product-image.jpg")) {
-      e.target.src = `${API_URL}/uploads/products/default-product-image.jpg`;
-    }
+    console.log("Checkout image failed:", getImageUrl(item));
+    e.currentTarget.src =
+      "https://placehold.co/300x300?text=No+Image";
   }}
-/>                  </div>
+/>                 </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-gray-900 dark:text-white truncate">{item.productName}</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">Qty: {item.quantity}</p>

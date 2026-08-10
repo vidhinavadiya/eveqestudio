@@ -10,6 +10,28 @@ import IncludedAddons from "../components/IncludedAddons";
 import { toast } from 'react-hot-toast';
 import { FiCopy } from 'react-icons/fi';
 
+
+const API_URL = process.env.REACT_APP_API_URL;
+
+const PRODUCT_DETAIL_API = `${API_URL}/api/product/customer`;
+const BASE_URL = `${API_URL}`;
+
+const getMediaUrl = (fileUrl) => {
+  if (!fileUrl) return '/placeholder.png';
+
+  // Cloudinary / external URL already complete hai
+  if (
+    fileUrl.startsWith('http://') ||
+    fileUrl.startsWith('https://') ||
+    fileUrl.startsWith('//')
+  ) {
+    return fileUrl;
+  }
+
+  // Old local-upload URLs ke liye
+  return `${BASE_URL}${fileUrl.startsWith('/') ? '' : '/'}${fileUrl}`;
+};
+
 const ProductViewCount = () => {
   const [viewCount, setViewCount] = useState(() => {
     // Shuru mein random 68-120 ke beech
@@ -48,11 +70,9 @@ const ProductViewCount = () => {
   );
 };
 
-      const API_URL = process.env.REACT_APP_API_URL;
-const PRODUCT_DETAIL_API = `${API_URL}/api/product/customer`;
-const BASE_URL = `${API_URL}`;
 
-const ProductGallery = ({ images, product, BASE_URL, selectedImage, setSelectedImage }) => {
+
+const ProductGallery = ({ images, product, selectedImage, setSelectedImage }) => {
   const scrollRef = useRef(null);
 
   // Sirf scrollToImage rakha (dots aur click ke liye)
@@ -85,17 +105,17 @@ const ProductGallery = ({ images, product, BASE_URL, selectedImage, setSelectedI
                 } w-20 h-20 lg:w-24 lg:h-24`}
               >
                 {media?.fileType === 'video' ? (
-                  <video
-                    src={`${BASE_URL}${media?.fileUrl || ''}`}
-                    className="w-full h-full object-cover"
-                    muted
-                  />
+                 <video
+  src={getMediaUrl(media?.fileUrl)}
+  className="w-full h-full object-cover"
+  muted
+/>
                 ) : (
                   <img
-                    src={`${BASE_URL}${media?.fileUrl || ''}`}
-                    alt={`Thumbnail ${idx + 1}`}
-                    className="w-full h-full object-cover"
-                  />
+  src={getMediaUrl(media?.fileUrl)}
+  alt={`Thumbnail ${idx + 1}`}
+  className="w-full h-full object-cover"
+/>
                 )}
 
                 {media?.fileType === 'video' && (
@@ -112,19 +132,19 @@ const ProductGallery = ({ images, product, BASE_URL, selectedImage, setSelectedI
         <div className="flex flex-col gap-4">
           {/* MAIN IMAGE */}
           <div className="bg-black rounded-xl overflow-hidden">
-            {images[selectedImage]?.fileType !== 'video' ? (
-              <img
-                src={`${BASE_URL}${images[selectedImage]?.fileUrl || ''}`}
-                alt={product.productName}
-                className="w-full h-auto max-h-[500px] lg:max-h-[650px] object-contain mx-auto"
-              />
-            ) : (
-              <video
-                src={`${BASE_URL}${images[selectedImage]?.fileUrl || ''}`}
-                controls
-                className="w-full h-auto max-h-[500px] lg:max-h-[650px] object-contain mx-auto"
-              />
-            )}
+           {images[selectedImage]?.fileType !== 'video' ? (
+  <img
+    src={getMediaUrl(images[selectedImage]?.fileUrl)}
+    alt={product.productName}
+    className="w-full h-auto max-h-[500px] lg:max-h-[650px] object-contain mx-auto"
+  />
+) : (
+  <video
+    src={getMediaUrl(images[selectedImage]?.fileUrl)}
+    controls
+    className="w-full h-auto max-h-[500px] lg:max-h-[650px] object-contain mx-auto"
+  />
+)}
           </div>
 
           {/* MOBILE-ONLY: Horizontal thumbnails at bottom */}
@@ -143,16 +163,16 @@ const ProductGallery = ({ images, product, BASE_URL, selectedImage, setSelectedI
                   >
                     {media?.fileType === 'video' ? (
                       <video
-                        src={`${BASE_URL}${media?.fileUrl || ''}`}
-                        className="w-full h-full object-cover"
-                        muted
-                      />
+  src={getMediaUrl(media?.fileUrl)}
+  className="w-full h-full object-cover"
+  muted
+/>
                     ) : (
                       <img
-                        src={`${BASE_URL}${media?.fileUrl || ''}`}
-                        alt={`Thumbnail ${idx + 1}`}
-                        className="w-full h-full object-cover"
-                      />
+  src={getMediaUrl(media?.fileUrl)}
+  alt={`Thumbnail ${idx + 1}`}
+  className="w-full h-full object-cover"
+/>
                     )}
 
                     {media?.fileType === 'video' && (
@@ -478,12 +498,11 @@ if (loading) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 {/* Gallery - yahan ProductGallery component use karo */}
           <ProductGallery
-            images={images}
-            product={product}
-            BASE_URL={BASE_URL}
-            selectedImage={selectedImage}
-            setSelectedImage={setSelectedImage}
-          />
+  images={images}
+  product={product}
+  selectedImage={selectedImage}
+  setSelectedImage={setSelectedImage}
+/>
 
           {/* Product Info */}
           <div className="p-6 lg:p-12 space-y-8">
@@ -585,11 +604,11 @@ if (loading) {
           <div className="flex items-center gap-3">
             {/* Small Product Image */}
             <img
-              src={item.images?.[0]?.fileUrl ? `${BASE_URL}${item.images[0].fileUrl}` : "/placeholder.png"}
-              alt={item.productName}
-              className="w-16 h-12 object-cover rounded-md cursor-pointer flex-shrink-0"
-              onClick={() => navigate(`/product/${item.productId}`)}
-            />
+  src={getMediaUrl(item.images?.[0]?.fileUrl)}
+  alt={item.productName}
+  className="w-16 h-12 object-cover rounded-md cursor-pointer flex-shrink-0"
+  onClick={() => navigate(`/product/${item.productId}`)}
+/>
             
             {/* Name and Price */}
             <div className="flex flex-col min-w-0">
@@ -1054,13 +1073,11 @@ if (loading) {
       {relatedProducts
         .filter((p) => p.category === product.category?.categoryName && p.productId !== product.productId)
         .map((product) => {
-          const BASE_URL = `${API_URL}`;
-          const mainImage = product.images?.[0]?.fileUrl
-            ? `${BASE_URL}${product.images[0].fileUrl}`
-            : 'https://via.placeholder.com/400';
-          const hoverImage = product.images?.[1]?.fileUrl
-            ? `${BASE_URL}${product.images[1].fileUrl}`
-            : mainImage;
+          const mainImage = getMediaUrl(product.images?.[0]?.fileUrl);
+
+const hoverImage = product.images?.[1]?.fileUrl
+  ? getMediaUrl(product.images[1].fileUrl)
+  : mainImage;
 
           return (
             <div

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-        const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
 export default function IncludedAddons({ productId }) {
   const [addons, setAddons] = useState([]);
@@ -12,10 +12,13 @@ export default function IncludedAddons({ productId }) {
     const fetchAddons = async () => {
       try {
         const res = await axios.get(`${API_URL}/api/link/public`);
+
         const allAddons = res.data.data || [];
+
         const filtered = allAddons.filter(
           (addon) => String(addon.productId) === String(productId)
         );
+
         setAddons(filtered);
       } catch (err) {
         console.error("Failed to load addons", err);
@@ -35,24 +38,33 @@ export default function IncludedAddons({ productId }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {addons.map((addon) => {
-          const points = Array.isArray(addon.points) ? addon.points : [];
-          const links = Array.isArray(addon.supportLinks) ? addon.supportLinks : [];
+          const points = Array.isArray(addon.points)
+            ? addon.points
+            : [];
+
+          const links = Array.isArray(addon.supportLinks)
+            ? addon.supportLinks
+            : [];
 
           return (
             <div
               key={addon.id}
-              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-4 rounded-lg shadow-sm 
-                         hover:shadow-lg hover:scale-[1.03] hover:border-gray-300 dark:hover:border-gray-600 
+              className="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-4 rounded-lg shadow-sm
+                         hover:shadow-lg hover:scale-[1.03] hover:border-gray-300 dark:hover:border-gray-600
                          transition-all duration-300 ease-out cursor-pointer w-[280px]"
             >
               {/* Image Box */}
               {addon.image && (
                 <div className="w-full h-[180px] mb-3 overflow-hidden rounded">
                   <img
-                    src={`${API_URL}/uploads/product-addons/${addon.image}`}
-                    alt={addon.title}
-                    className="w-full h-full object-cover transition-transform duration-500 
+                    src={addon.image}
+                    alt={addon.title || "Product Add-On"}
+                    className="w-full h-full object-cover transition-transform duration-500
                                group-hover:scale-105"
+                    onError={(e) => {
+                      console.error("Addon image failed:", addon.image);
+                      e.currentTarget.style.display = "none";
+                    }}
                   />
                 </div>
               )}
@@ -68,7 +80,9 @@ export default function IncludedAddons({ productId }) {
                   <div className="mb-4">
                     <ul className="list-disc ml-5 text-gray-700 dark:text-gray-300 text-sm">
                       {points.map((point) => (
-                        <li key={point.id}>{point.point}</li>
+                        <li key={point.id}>
+                          {point.point}
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -80,6 +94,7 @@ export default function IncludedAddons({ productId }) {
                     <p className="font-medium mb-2 text-gray-900 dark:text-gray-200 text-sm">
                       Supports:
                     </p>
+
                     <ul className="list-disc ml-5 text-gray-700 dark:text-gray-300 text-sm">
                       {links.map((link) => (
                         <li key={link.id}>
@@ -87,7 +102,8 @@ export default function IncludedAddons({ productId }) {
                             href={link.link}
                             target="_blank"
                             rel="noreferrer"
-                            className="underline text-gray-900 dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300"
+                            className="underline text-gray-900 dark:text-gray-100
+                                       hover:text-gray-700 dark:hover:text-gray-300"
                           >
                             {link.title}
                           </a>

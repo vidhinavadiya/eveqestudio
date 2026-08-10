@@ -4,6 +4,18 @@ import axios from 'axios';
 import Navbar from '../../components/Navbar';
 
         const API_URL = process.env.REACT_APP_API_URL;
+
+        const getMediaUrl = (url, folder = '') => {
+  if (!url) return '';
+
+  // Cloudinary / external URL
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url;
+  }
+
+  // Local server URL
+  return `${API_URL}${folder ? `/${folder}` : ''}${url.startsWith('/') ? url : `/${url}`}`;
+};
 const PRODUCT_API = `${API_URL}/api/product/customer/products`;
 const SUBCATEGORY_API = `${API_URL}/api/subcategory/public`;
 
@@ -210,10 +222,17 @@ if (loading) {
           {subcategory?.subCategoryImage && (
             <div className="mb-8 transform hover:scale-105 transition-transform duration-700">
               <img
-                src={`${API_URL}/uploads/subcategories/${subcategory.subCategoryImage}`}
-                alt={subcategory.subCategoryName}
-                className="w-32 h-32 md:w-40 md:h-40 mx-auto object-cover rounded-2xl shadow-2xl ring-4 ring-white/50 dark:ring-gray-800/50"
-              />
+  src={getMediaUrl(
+    subcategory.subCategoryImage,
+    'uploads/subcategories'
+  )}
+  alt={subcategory.subCategoryName}
+  className="w-32 h-32 md:w-40 md:h-40 mx-auto object-cover rounded-2xl shadow-2xl ring-4 ring-white/50 dark:ring-gray-800/50"
+  onError={(e) => {
+    e.currentTarget.src =
+      'https://via.placeholder.com/300x300?text=Image+Error';
+  }}
+/>
             </div>
           )}
           <p className="text-sm md:text-base uppercase tracking-[0.3em] font-medium text-indigo-600 dark:text-indigo-400 mb-4">
@@ -472,11 +491,16 @@ if (loading) {
       ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
       : 'grid-cols-1'}`}>
       {filteredProducts.map((product) => {
-        const BASE_URL = `${API_URL}`;
         const mainPath = product.images?.[0]?.fileUrl || '';
-        const hoverPath = product.images?.[1]?.fileUrl || mainPath;
-        const mainImage = mainPath ? `${BASE_URL}${mainPath}` : null;
-        const hoverImage = hoverPath ? `${BASE_URL}${hoverPath}` : mainImage;
+const hoverPath = product.images?.[1]?.fileUrl || mainPath;
+
+const mainImage = mainPath
+  ? getMediaUrl(mainPath)
+  : null;
+
+const hoverImage = hoverPath
+  ? getMediaUrl(hoverPath)
+  : mainImage;
 
         return (
           <div

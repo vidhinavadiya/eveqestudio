@@ -34,7 +34,7 @@ class ProductController {
       console.error(error);
       return res.status(400).json({ 
         success: false, 
-        message: err.message 
+        message: error.message
       });
     }
   }
@@ -50,7 +50,7 @@ class ProductController {
       console.error(error);
       return res.status(400).json({ 
         success: false, 
-        message: err.message 
+        message: error.message
       });
     }
   }
@@ -66,7 +66,7 @@ class ProductController {
       console.error(error);
       return res.status(400).json({ 
         success: false, 
-        message: err.message 
+        message: error.message
       });
     }
   }
@@ -82,7 +82,7 @@ class ProductController {
       console.error(error);
       return res.status(500).json({ 
         success: false, 
-        message: err.message 
+        message: error.message
       });
     }
   }
@@ -98,7 +98,7 @@ class ProductController {
       console.error(error);
       return res.status(404).json({ 
         success: false, 
-        message: err.message 
+        message: error.message
       });
     }
   }
@@ -114,7 +114,7 @@ class ProductController {
       console.error(error);
       return res.status(500).json({ 
         success: false, 
-        message: err.message 
+       message: error.message
       });
     }
   }
@@ -130,7 +130,7 @@ class ProductController {
       console.error(error);
       return res.status(404).json({ 
         success: false, 
-        message: err.message 
+        message: error.message
       });
     }
   }

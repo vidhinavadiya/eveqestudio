@@ -56,51 +56,132 @@ export default function AdminSubcategories({ onLogout }) {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(''); setSuccessMsg('');
-    if (!formData.subCategoryName || !formData.categoryId) return setError('Name & Category are required');
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const data = new FormData();
-    data.append('subCategoryName', formData.subCategoryName);
-    data.append('categoryId', formData.categoryId);
-    data.append('description', formData.description);
-    data.append('status', formData.status);
-    if (formData.subCategoryImage) data.append('subCategoryImage', formData.subCategoryImage);
+  setError('');
+  setSuccessMsg('');
 
-    try {
-      if (selectedSubcategory) {
-        const res = await axios.put(`${API_URL}/api/subcategory/${selectedSubcategory.id}`, data, {
-          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
-        });
-        // After updating subcategory
-        const updatedSubcat = {
+  if (!formData.subCategoryName || !formData.categoryId) {
+    return setError('Name & Category are required');
+  }
+
+  const data = new FormData();
+
+  data.append(
+    'subCategoryName',
+    formData.subCategoryName
+  );
+
+  data.append(
+    'categoryId',
+    formData.categoryId
+  );
+
+  data.append(
+    'description',
+    formData.description
+  );
+
+  data.append(
+    'status',
+    formData.status ? 'true' : 'false'
+  );
+
+  if (formData.subCategoryImage) {
+    data.append(
+      'subCategoryImage',
+      formData.subCategoryImage
+    );
+  }
+
+  try {
+    if (selectedSubcategory) {
+      // UPDATE
+      const res = await axios.put(
+        `${API_URL}/api/subcategory/${selectedSubcategory.id}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      const updatedSubcat = {
         ...res.data.data,
-        category: categories.find(cat => cat.id === parseInt(res.data.data.categoryId))
-        };
-        setSubcategories(subcategories.map(sc => sc.id === updatedSubcat.id ? updatedSubcat : sc));
-        setSuccessMsg('Subcategory updated successfully!');
-      } else {
-        const res = await axios.post(`${API_URL}/api/subcategory`, data, {
-          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
-        });
-        // Add category object manually
-        const newSubcat = {
-        ...res.data.data,
-        category: categories.find(cat => cat.id === parseInt(res.data.data.categoryId))
-        };
-        setSubcategories([...subcategories, newSubcat]);
-        setSuccessMsg('Subcategory added successfully!');
-      }
+        category: categories.find(
+          cat =>
+            cat.id === parseInt(res.data.data.categoryId)
+        )
+      };
 
-      setFormData({ subCategoryName: '', categoryId: '', description: '', status: true, subCategoryImage: null });
-      setSelectedSubcategory(null);
-      setShowAddModal(false);
-      setShowEditModal(false);
-    } catch (err) {
-      setError(err.response?.data?.message || 'Failed to save subcategory');
+      setSubcategories(
+        subcategories.map(sc =>
+          sc.id === updatedSubcat.id
+            ? updatedSubcat
+            : sc
+        )
+      );
+
+      setSuccessMsg(
+        'Subcategory updated successfully!'
+      );
+
+    } else {
+      // CREATE
+      const res = await axios.post(
+        `${API_URL}/api/subcategory`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      const newSubcat = {
+        ...res.data.data,
+        category: categories.find(
+          cat =>
+            cat.id === parseInt(res.data.data.categoryId)
+        )
+      };
+
+      setSubcategories([
+        ...subcategories,
+        newSubcat
+      ]);
+
+      setSuccessMsg(
+        'Subcategory added successfully!'
+      );
     }
-  };
+
+    setFormData({
+      subCategoryName: '',
+      categoryId: '',
+      description: '',
+      status: true,
+      subCategoryImage: null
+    });
+
+    setSelectedSubcategory(null);
+    setShowAddModal(false);
+    setShowEditModal(false);
+
+  } catch (err) {
+    console.error(
+      'Subcategory Save Error:',
+      err
+    );
+
+    setError(
+      err.response?.data?.message ||
+      'Failed to save subcategory'
+    );
+  }
+};
 
   const handleEdit = (subcat) => {
     setFormData({
@@ -184,10 +265,13 @@ export default function AdminSubcategories({ onLogout }) {
                       <td className="px-6 py-4">
                         {sc.subCategoryImage ? (
                           <img
-                            src={`${API_URL}/uploads/subcategories/${sc.subCategoryImage}`}
-                            alt={sc.subCategoryName}
-                            className="w-16 h-16 object-cover rounded-md border border-gray-300 dark:border-gray-700"
-                          />
+  src={sc.subCategoryImage}
+  alt={sc.subCategoryName}
+  className="w-16 h-16 object-cover rounded-md border border-gray-300 dark:border-gray-700"
+  onError={(e) => {
+    e.currentTarget.src = '/placeholder-image.jpg';
+  }}
+/>
                         ) : <span className="text-gray-500 dark:text-gray-400">No image</span>}
                       </td>
                       <td className="px-6 py-4">

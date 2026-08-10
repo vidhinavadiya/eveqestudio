@@ -1,95 +1,172 @@
 const reviewService = require('../services/review.service');
+const { uploadToCloudinary } = require('../utils/cloudinaryUpload');
 
 class ReviewController {
-    //create review
+
+    // CREATE REVIEW
     async create(req, res) {
         try {
-            const images = req.files?.map(file => `/uploads/reviews/${file.filename}`) || [];
-            const review = await reviewService.addReview(req.body, images);
+
+            const images = [];
+
+            if (req.files && req.files.length > 0) {
+                for (const file of req.files) {
+
+                    const uploadedImage = await uploadToCloudinary(
+                        file.buffer,
+                        'eveqe/reviews'
+                    );
+
+                    images.push(uploadedImage.secure_url);
+                }
+            }
+
+            const review = await reviewService.addReview(
+                req.body,
+                images
+            );
+
             return res.status(201).json({
                 success: true,
-                message: "Review added successfully",
+                message: 'Review added successfully',
                 data: review
             });
+
         } catch (error) {
-            return res.status(400).json({ 
-                success: false, 
-                message: error.message 
+
+            console.error('Review Create Error:', error);
+
+            return res.status(400).json({
+                success: false,
+                message: error.message
             });
         }
     }
-    //update review
+
+
+    // UPDATE REVIEW
     async update(req, res) {
         try {
-            const images = req.files?.map(file => `/uploads/reviews/${file.filename}`) || [];
-            const updated = await reviewService.updateReview(req.params.id, req.body, images);
+
+            const images = [];
+
+            if (req.files && req.files.length > 0) {
+                for (const file of req.files) {
+
+                    const uploadedImage = await uploadToCloudinary(
+                        file.buffer,
+                        'eveqe/reviews'
+                    );
+
+                    images.push(uploadedImage.secure_url);
+                }
+            }
+
+            const updated = await reviewService.updateReview(
+                req.params.id,
+                req.body,
+                images
+            );
+
             return res.status(200).json({
                 success: true,
-                message: "Review updated successfully",
+                message: 'Review updated successfully',
                 data: updated
             });
+
         } catch (error) {
-            return res.status(400).json({ 
-                success: false, 
-                message: error.message 
+
+            console.error('Review Update Error:', error);
+
+            return res.status(400).json({
+                success: false,
+                message: error.message
             });
         }
     }
-    //get by product
+
+
+    // GET BY PRODUCT
     async getByProduct(req, res) {
         try {
+
             const { productId } = req.params;
-            const reviews = await reviewService.getProductReviews(productId);
+
+            const reviews =
+                await reviewService.getProductReviews(productId);
+
             return res.status(200).json({
                 success: true,
                 data: reviews
             });
+
         } catch (error) {
+
             return res.status(500).json({
                 success: false,
                 message: error.message
             });
         }
     }
-    //delete review
+
+
+    // DELETE REVIEW
     async delete(req, res) {
         try {
+
             await reviewService.deleteReview(req.params.id);
+
             return res.status(200).json({
                 success: true,
-                message: "Review deleted successfully"
+                message: 'Review deleted successfully'
             });
+
         } catch (error) {
+
             return res.status(404).json({
                 success: false,
                 message: error.message
             });
         }
     }
-    //get all review
+
+
+    // GET ALL REVIEWS
     async getAll(req, res) {
         try {
-            const reviews = await reviewService.getAllReviews();
+
+            const reviews =
+                await reviewService.getAllReviews();
+
             return res.status(200).json({
                 success: true,
                 data: reviews
             });
+
         } catch (error) {
+
             return res.status(500).json({
                 success: false,
                 message: error.message
             });
         }
     }
-    //get all public
+
+
+    // GET ALL PUBLIC REVIEWS
     async getAllPublic(req, res) {
         try {
-            const reviews = await reviewService.getAllPublicReviews();
+
+            const reviews =
+                await reviewService.getAllPublicReviews();
+
             return res.status(200).json({
                 success: true,
                 data: reviews
             });
+
         } catch (error) {
+
             return res.status(500).json({
                 success: false,
                 message: error.message

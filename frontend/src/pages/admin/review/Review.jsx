@@ -271,11 +271,15 @@ const handleUpdate = async (e) => {
                   <div className="flex gap-2">
                     {review.images.map((img) => (
                       <img
-                        key={img.id}
-                        src={`${API_URL}${img.fileUrl}`}
-                        alt="review"
-                        className="w-12 h-12 object-cover rounded"
-                      />
+  key={img.id}
+  src={img.fileUrl}
+  alt="review"
+  className="w-12 h-12 object-cover rounded border border-gray-200 dark:border-gray-700"
+  onError={(e) => {
+    e.currentTarget.src =
+      'https://via.placeholder.com/64?text=No+Image';
+  }}
+/>
                     ))}
                   </div>
                 ) : (

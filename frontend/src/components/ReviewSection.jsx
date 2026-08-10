@@ -7,6 +7,19 @@ import { jwtDecode } from "jwt-decode";
 const BASE_URL = `${API_URL}`;
 
 
+
+// Cloudinary + old local upload URLs support 
+const getMediaUrl = (fileUrl) => { 
+  if (!fileUrl) return "/placeholder.png"; 
+  // Cloudinary / external URL 
+  if ( fileUrl.startsWith("http://") || 
+  fileUrl.startsWith("https://") || 
+  fileUrl.startsWith("//") ) { 
+    return fileUrl; 
+  } 
+  // Old local-upload URL 
+  return `${BASE_URL}${fileUrl.startsWith("/") ? "" : "/"}${fileUrl}`; 
+};
 export default function ReviewSection({ product }) {
   const [reviews, setReviews] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
@@ -165,8 +178,8 @@ const totalPages = Math.ceil(reviews.length / reviewsPerPage);
                 <div className="flex gap-4 flex-wrap mt-6">
                   {rev.images.map((img) => (
                     <img
-                      key={img.id}
-                      src={`${BASE_URL}${img.fileUrl}`}
+                      key={img.id} 
+                      src={getMediaUrl(img.fileUrl)}
                       alt="Review attachment"
                       className="w-28 h-28 object-cover rounded-2xl border border-slate-200 dark:border-slate-700 hover:scale-105 transition-transform cursor-zoom-in"
                     />
@@ -265,7 +278,7 @@ const totalPages = Math.ceil(reviews.length / reviewsPerPage);
             {product?.images?.[0]?.fileUrl && (
               <div className="flex justify-center mb-6">
                 <img
-                  src={`${BASE_URL}${product.images[0].fileUrl}`}
+                 src={getMediaUrl( product.images[0].fileUrl )}
                   alt={product.productName}
                   className="w-20 h-20 object-cover rounded-2xl shadow-xl ring-4 ring-slate-50 dark:ring-slate-800"
                 />

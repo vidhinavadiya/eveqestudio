@@ -194,52 +194,42 @@ static async updateProduct(id, data, files, transaction) {
   }
 
   // Step 4: Handle media – IMPORTANT CHANGE HERE
-  // Purane images delete nahi honge, sirf removed IDs wale delete honge + naye add honge
-  if (files || data.removedMediaIds) {
-    // Remove specific media if IDs sent
-    if (data.removedMediaIds) {
-      let removedIds = [];
-      try {
-        removedIds = JSON.parse(data.removedMediaIds);
-      } catch (e) {
-        console.error('Invalid removedMediaIds format:', e);
-      }
+// Step 4: Handle media
 
-      if (removedIds.length > 0) {
-        await ProductImage.destroy({
-          where: {
-            id: removedIds,
-            productId: id
-          },
-          transaction
-        });
-      }
-    }
+// Remove selected existing media
+if (data.removedMediaIds) {
+  let removedIds = [];
 
-    // Add new images
-    if (files?.productImages?.length) {
-      const newImages = files.productImages.map((file, i) => ({
-        productId: id,
-        fileUrl: `/uploads/products/${file.filename}`,
-        fileType: 'image',
-        isPrimary: i === 0
-      }));
-
-      await ProductImage.bulkCreate(newImages, { transaction });
-    }
-
-    // Add new videos
-    if (files?.productVideos?.length) {
-      const newVideos = files.productVideos.map(file => ({
-        productId: id,
-        fileUrl: `/uploads/products/${file.filename}`,
-        fileType: 'video',
-        isPrimary: false
-      }));
-
-      await ProductImage.bulkCreate(newVideos, { transaction });
-    }
+  try {
+    removedIds = JSON.parse(data.removedMediaIds);
+  } catch (e) {
+    console.error('Invalid removedMediaIds format:', e);
   }
+
+  if (Array.isArray(removedIds) && removedIds.length > 0) {
+    await ProductImage.destroy({
+      where: {
+        id: removedIds,
+        productId: id
+      },
+      transaction
+    });
+  }
+}
+
+// Add new Cloudinary media
+if (Array.isArray(files) && files.length > 0) {
+  const newMedia = files.map((item, index) => ({
+    productId: id,
+    fileUrl: item.fileUrl,
+    fileType: item.fileType,
+    isPrimary: item.fileType === 'image' && index === 0
+  }));
+
+  await ProductImage.bulkCreate(newMedia, {
+    transaction
+  });
+}
 
   // Step 5: Reload product with latest data
   return await Product.findByPk(id, {

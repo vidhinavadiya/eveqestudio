@@ -7,7 +7,6 @@ import AdminSidebar from '../../../components/admin/AdminSidebar';
 const API_BASE_URL = `${API_URL}/api/product`;
 const CATEGORY_API = `${API_URL}/api/category/public`;
 const SUBCATEGORY_API = `${API_URL}/api/subcategory/public`;
-const BASE_MEDIA_URL = `${API_URL}`; // For existing media URLs
 
 export default function Products({ onLogout }) {
   const [products, setProducts] = useState([]);
@@ -1371,18 +1370,20 @@ export default function Products({ onLogout }) {
             {existingMedia.map((media, idx) => (
               <div key={`existing-${media.id}`} className="relative group">
                 {media.type === 'video' ? (
-                  <video
-                    src={`${BASE_MEDIA_URL}${media.url}`}
-                    controls
-                    className="w-full h-32 object-cover rounded-md border border-gray-300 dark:border-gray-700 shadow-sm"
-                  />
-                ) : (
-                  <img
-                    src={`${BASE_MEDIA_URL}${media.url}`}
-                    alt="Existing media"
-                    className="w-full h-32 object-cover rounded-md border border-gray-300 dark:border-gray-700 shadow-sm"
-                  />
-                )}
+  <video
+    src={media.url}
+    controls
+    preload="metadata"
+    className="w-full h-32 object-cover rounded-md border border-gray-300 dark:border-gray-700 shadow-sm"
+  />
+) : (
+  <img
+    src={media.url}
+    alt="Existing product media"
+    loading="lazy"
+    className="w-full h-32 object-cover rounded-md border border-gray-300 dark:border-gray-700 shadow-sm"
+  />
+)}
                 <button
                   type="button"
                   onClick={() => removeExistingMedia(media.id, idx)}
