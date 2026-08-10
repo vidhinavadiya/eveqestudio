@@ -249,9 +249,9 @@ useEffect(() => {
 
     <div className="relative">
       <div 
-        ref={scrollContainerRef}
-        className="flex gap-2.5 sm:gap-3 md:gap-4 overflow-x-auto pb-5 pt-1 scrollbar-hide scroll-smooth snap-x snap-mandatory -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8"
-      >
+  ref={scrollContainerRef}
+  className="flex gap-2.5 sm:gap-3 md:gap-4 overflow-x-auto pb-5 pt-1 px-3 sm:px-4 md:px-6 lg:px-8 scrollbar-hide scroll-smooth snap-x snap-mandatory"
+>
         {categories.map((category) => {
           const imageUrl = category.categoryImage 
             ? `${API_URL}/uploads/categories/${category.categoryImage}` 
@@ -327,19 +327,19 @@ useEffect(() => {
       </div>
 
       {/* Scroll buttons */}
-      <button
-        onClick={() => scrollCategories('left')}
-        className="absolute -left-2 sm:-left-3 md:-left-4 lg:-left-5 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-gray-800/90 backdrop-blur p-2 rounded-full shadow border border-gray-200/70 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition hidden md:flex items-center justify-center z-10"
-      >
+        <button
+    onClick={() => scrollCategories('left')}
+    className="absolute left-2 sm:left-3 md:left-4 lg:left-5 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-gray-800/90 backdrop-blur p-2 rounded-full shadow border border-gray-200/70 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition hidden md:flex items-center justify-center z-10"
+  >
         <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
-      <button
-        onClick={() => scrollCategories('right')}
-        className="absolute -right-2 sm:-right-3 md:-right-4 lg:-right-5 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-gray-800/90 backdrop-blur p-2 rounded-full shadow border border-gray-200/70 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition hidden md:flex items-center justify-center z-10"
-      >
+        <button
+    onClick={() => scrollCategories('right')}
+    className="absolute right-2 sm:right-3 md:right-4 lg:right-5 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-gray-800/90 backdrop-blur p-2 rounded-full shadow border border-gray-200/70 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition hidden md:flex items-center justify-center z-10"
+  >
         <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
         </svg>

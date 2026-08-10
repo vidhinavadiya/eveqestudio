@@ -217,9 +217,37 @@ const totalPages = Math.ceil(reviews.length / reviewsPerPage);
 )}
       {/* Write Review Popup */}
       {showPopup && (
-        <div className="fixed inset-0 bg-slate-900/90 backdrop-blur-md flex items-center justify-center z-[100] p-4">
-          <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 max-w-lg w-full relative shadow-2xl border border-slate-200 dark:border-slate-800 animate-in fade-in zoom-in duration-200">
-            <button
+  <div
+    className="
+      fixed inset-0
+      z-[9999]
+      bg-slate-900/90
+      backdrop-blur-md
+      flex items-start justify-center
+      overflow-y-auto
+      p-4
+      pt-24
+      md:pt-28
+    "
+    onClick={() => setShowPopup(false)}
+  >
+<div
+  className="
+    review-popup-scroll
+    bg-white dark:bg-slate-900
+    rounded-3xl md:rounded-[2.5rem]
+    p-5 sm:p-6 md:p-8
+    max-w-lg
+    w-full
+    relative
+    shadow-2xl
+    border border-slate-200 dark:border-slate-800
+    animate-in fade-in zoom-in duration-200
+    max-h-[calc(100vh-7rem)]
+    overflow-y-auto
+  "
+  onClick={(e) => e.stopPropagation()}
+>            <button
               onClick={() => setShowPopup(false)}
               className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-red-500 transition-colors text-2xl"
             >

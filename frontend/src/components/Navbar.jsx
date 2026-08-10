@@ -263,12 +263,36 @@ export default function Navbar({
             </button>
           </div>
 
-          <div className="flex flex-col space-y-6 text-center text-lg font-medium">
-            <Link to="/home" onClick={() => setIsOpen(false)}>Home</Link>
-            <CategoriesMenu isMobile={true} closeDrawer={() => setIsOpen(false)} />
-            <Link to="/about" onClick={() => setIsOpen(false)}>About</Link>
-            <Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
-          </div>
+          <div className="flex flex-col space-y-6 text-center text-lg font-medium text-gray-900 dark:text-white">
+  <Link
+    to="/home"
+    onClick={() => setIsOpen(false)}
+    className="text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+  >
+    Home
+  </Link>
+
+  <CategoriesMenu
+    isMobile={true}
+    closeDrawer={() => setIsOpen(false)}
+  />
+
+  <Link
+    to="/about"
+    onClick={() => setIsOpen(false)}
+    className="text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+  >
+    About
+  </Link>
+
+  <Link
+    to="/contact"
+    onClick={() => setIsOpen(false)}
+    className="text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+  >
+    Contact
+  </Link>
+</div>
 
           <div className="mt-auto pt-10">
             {isLoggedIn ? (

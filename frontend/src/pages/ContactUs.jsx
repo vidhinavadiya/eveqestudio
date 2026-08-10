@@ -45,8 +45,7 @@ export default function ContactUs({ isLoggedIn, onLogout, darkMode, toggleDarkMo
       />
 
       {/* Hero Section – same style as About/Home */}
-      <section className="relative pt-24 pb-32 px-6 md:px-12 lg:px-24 text-center overflow-hidden">
-        <div 
+<section className="relative pt-36 md:pt-40 pb-32 px-6 md:px-12 lg:px-24 text-center overflow-hidden">        <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: "url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070')"

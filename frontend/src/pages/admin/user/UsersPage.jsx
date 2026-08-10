@@ -54,15 +54,15 @@ const handleLogout = () => {
         />
 
         {/* Main Content */}
-        <main className="flex-1 p-6 md:p-10 animate-fadeIn">
+        <main className="flex-1 min-w-0 p-6 md:p-10 md:ml-72 animate-fadeIn">
           <div className="max-w-7xl mx-auto">
             <h1 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-8">
               All Users
             </h1>
 
             <div className="bg-white dark:bg-gray-950 border border-gray-300 dark:border-gray-800 rounded-2xl shadow-lg overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left">
+              <div className="w-full max-w-full overflow-x-auto">
+  <table className="w-full min-w-[700px] text-left">
                   <thead className="bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
                     <tr>
                       <th className="px-6 py-4 font-semibold text-gray-700 dark:text-gray-300">ID</th>

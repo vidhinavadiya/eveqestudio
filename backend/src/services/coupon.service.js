@@ -103,14 +103,20 @@ static async applyCoupon({ code, userId, cartId }) {
     };
   }
 
-  static async createCoupon(data) {
-      const coupon = await CouponRepository.create(data);
-    //send email
-for (const u of users) {
-  await sendCouponEmail(u, coupon, products);
+//   static async createCoupon(data) {
+//       const coupon = await CouponRepository.create(data);
+//     //send email
+// for (const u of users) {
+//   await sendCouponEmail(u, coupon, products);
+// }
+// return coupon;
+//   }
+
+static async createCoupon(data) {
+  const coupon = await CouponRepository.create(data);
+
+  return coupon;
 }
-return coupon;
-  }
 
   static async updateCoupon(id, data) {
     return await CouponRepository.update(id, data);

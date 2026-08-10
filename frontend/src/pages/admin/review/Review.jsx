@@ -184,7 +184,7 @@ const handleUpdate = async (e) => {
     <div className="flex min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 transition-colors duration-300">
       <AdminSidebar active="reviews" onLogout={onLogout} />
 
-      <main className="flex-1 md:ml-72 p-6 md:p-10">
+      <main className="flex-1 min-w-0 md:ml-72 p-6 md:p-10">
         <h1 className="text-4xl font-bold mb-8">Manage Reviews</h1>
 
         {error && <p className="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-3 rounded-lg mb-4">{error}</p>}
@@ -197,112 +197,134 @@ const handleUpdate = async (e) => {
           + Add Review
         </button>
 
-        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden">
-          <div className="p-6 border-b border-gray-100 dark:border-gray-800">
-            <h2 className="text-2xl font-bold">All Reviews ({reviews.length})</h2>
-          </div>
+<div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden">
+  
+  <div className="p-6 border-b border-gray-100 dark:border-gray-800">
+    <h2 className="text-2xl font-bold">
+      All Reviews ({reviews.length})
+    </h2>
+  </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead className="bg-gray-50 dark:bg-gray-800/50 text-gray-600 dark:text-gray-400 uppercase text-sm">
-                <tr>
-                  <th className="px-6 py-4">ID</th>
-                  <th className="px-6 py-4">User</th>
-                  <th className="px-6 py-4">Product ID</th>
-                  <th className="px-6 py-4">Rating</th>
-                  <th className="px-6 py-4">Comment</th>
-                  <th className="px-6 py-4">Images</th>
-                  <th className="px-6 py-4">Actions</th>
-                </tr>
-              </thead>
- <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-  {loading ? (
-    <tr>
-      <td colSpan="7" className="text-center py-10">
-        Loading...
-      </td>
-    </tr>
-  ) : reviews.length === 0 ? (
-    <tr>
-      <td colSpan="7" className="text-center py-10 text-gray-500">
-        No reviews found.
-      </td>
-    </tr>
-  ) : (
-    reviews.map((review) => (
-      <tr key={review.id}>
-        <td className="px-6 py-4">{review.id}</td>
+  {/* TABLE SCROLL ONLY */}
+  <div className="w-full max-w-full overflow-x-auto">
+    <table className="w-full min-w-[900px] text-left">
+      
+      <thead className="bg-gray-50 dark:bg-gray-800/50 text-gray-600 dark:text-gray-400 uppercase text-sm">
+        <tr>
+          <th className="px-6 py-4">ID</th>
+          <th className="px-6 py-4">User</th>
+          <th className="px-6 py-4">Product ID</th>
+          <th className="px-6 py-4">Rating</th>
+          <th className="px-6 py-4">Comment</th>
+          <th className="px-6 py-4">Images</th>
+          <th className="px-6 py-4">Actions</th>
+        </tr>
+      </thead>
 
-        <td className="px-6 py-4">
-          {review.user?.username || review.userId}
-        </td>
+      <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
 
-        <td className="px-6 py-4">
-          {
-            products.find(p => p.productId === review.productId)?.productName
-            || review.productId
-          }
-        </td>
+        {loading ? (
+          <tr>
+            <td colSpan="7" className="text-center py-10">
+              Loading...
+            </td>
+          </tr>
+        ) : reviews.length === 0 ? (
+          <tr>
+            <td
+              colSpan="7"
+              className="text-center py-10 text-gray-500"
+            >
+              No reviews found.
+            </td>
+          </tr>
+        ) : (
+          reviews.map((review) => (
+            <tr key={review.id}>
 
-        <td className="px-6 py-4 text-yellow-500">
-          ⭐ {review.rating}
-        </td>
+              <td className="px-6 py-4">
+                {review.id}
+              </td>
 
-        <td className="px-6 py-4 max-w-xs truncate">
-          {review.comment}
-        </td>
+              <td className="px-6 py-4">
+                {review.user?.username || review.userId}
+              </td>
 
-        <td className="px-6 py-4">
-          {review.images && review.images.length > 0 ? (
-            <div className="flex gap-2">
-              {review.images.map((img) => (
-                <img
-                  key={img.id}
-                  src={`${API_URL}${img.fileUrl}`}
-                  alt="review"
-                  className="w-12 h-12 object-cover rounded"
-                />
-              ))}
-            </div>
-          ) : (
-            <span className="text-gray-400">No Images</span>
-          )}
-        </td>
+              <td className="px-6 py-4">
+                {
+                  products.find(
+                    p => p.productId === review.productId
+                  )?.productName || review.productId
+                }
+              </td>
 
-        <td className="px-6 py-4 flex gap-4">
-          <button
-            onClick={() => {
-              setSelectedReview(review);
-              setEditForm({
-                userId: review.userId,
-                productId: review.productId,
-                rating: review.rating,
-                comment: review.comment || ''
-              });
-              setShowEditModal(true);
-            }}
-            className="text-blue-500"
-          >
-            Edit
-          </button>
+              <td className="px-6 py-4 text-yellow-500">
+                ⭐ {review.rating}
+              </td>
 
-          <button
-            onClick={() => {
-              setSelectedReview(review);
-              setShowDeleteModal(true);
-            }}
-            className="text-red-500"
-          >
-            Delete
-          </button>
-        </td>
-      </tr>
-    ))
-  )}
-</tbody>
-            </table>
-          </div>
-        </div>
+              <td className="px-6 py-4 max-w-xs truncate">
+                {review.comment}
+              </td>
+
+              <td className="px-6 py-4">
+                {review.images && review.images.length > 0 ? (
+                  <div className="flex gap-2">
+                    {review.images.map((img) => (
+                      <img
+                        key={img.id}
+                        src={`${API_URL}${img.fileUrl}`}
+                        alt="review"
+                        className="w-12 h-12 object-cover rounded"
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <span className="text-gray-400">
+                    No Images
+                  </span>
+                )}
+              </td>
+
+              <td className="px-6 py-4">
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => {
+                      setSelectedReview(review);
+
+                      setEditForm({
+                        userId: review.userId,
+                        productId: review.productId,
+                        rating: review.rating,
+                        comment: review.comment || ''
+                      });
+
+                      setShowEditModal(true);
+                    }}
+                    className="text-blue-500"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setSelectedReview(review);
+                      setShowDeleteModal(true);
+                    }}
+                    className="text-red-500"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+
+            </tr>
+          ))
+        )}
+
+      </tbody>
+    </table>
+  </div>
+</div>
       </main>
 
       {/* --- ADD MODAL --- */}

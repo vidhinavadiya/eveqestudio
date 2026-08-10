@@ -481,31 +481,43 @@ if (loading) {
         return (
           <div
             key={product.productId}
-            className={`group relative bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-indigo-400/50 dark:hover:border-indigo-500/50 cursor-pointer ${
-              viewMode === 'list' 
-                ? 'flex items-center gap-6 h-40 md:h-48'   // ← List view: chhoti height + flex row
-                : 'flex flex-col h-96 md:h-[28rem]'       // ← Grid view: badi height
-            }`}
+           className={`group relative bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl
+  border border-gray-200/50 dark:border-gray-700/50
+  rounded-2xl overflow-hidden
+  shadow-xl hover:shadow-2xl
+  transition-all duration-500
+  hover:-translate-y-2
+  hover:border-indigo-400/50 dark:hover:border-indigo-500/50
+  cursor-pointer
+  ${
+    viewMode === 'list'
+      ? 'flex items-center gap-5 md:gap-7 min-h-[160px] md:min-h-[190px] p-3 md:p-4'
+      : 'flex flex-col h-96 md:h-[28rem]'
+  }
+`}
             onClick={() => navigate(`/product/${product.productId}`)}
           >
             {/* Image Container */}
-            <div className={`relative overflow-hidden ${
-              viewMode === 'list' 
-                ? 'w-32 h-32 md:w-40 md:h-40 flex-shrink-0'   // List: chhoti image
-                : 'w-full h-3/5 md:h-64'                      // Grid: badi image
-            }`}>
+            <div
+  className={`relative overflow-hidden flex-shrink-0 ${
+    viewMode === 'list'
+      ? 'w-32 h-32 md:w-44 md:h-44 rounded-xl'
+      : 'w-full h-3/5 md:h-64'
+  }`}
+>
               {mainImage ? (
                 <>
-                  <img
-                    src={mainImage}
-                    alt={product.productName}
-                    className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${
-                      viewMode === 'list' ? 'rounded-l-2xl' : ''
-                    }`}
-                    onError={(e) => {
-                      e.target.src = 'https://via.placeholder.com/400x500?text=Image+Error';
-                    }}
-                  />
+                <img
+  src={mainImage}
+  alt={product.productName}
+  className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${
+    viewMode === 'list' ? 'rounded-xl' : ''
+  }`}
+  onError={(e) => {
+    e.target.src =
+      'https://via.placeholder.com/400x500?text=Image+Error';
+  }}
+/>
                   {hoverImage && hoverImage !== mainImage && (
                     <img
                       src={hoverImage}
@@ -551,9 +563,23 @@ if (loading) {
                 {product.productName}
               </h2>
 
-              <p className={`text-gray-600 dark:text-gray-400 ${viewMode === 'list' ? 'text-sm line-clamp-1' : 'text-sm md:text-base line-clamp-2'} mb-2 md:mb-4 min-h-[2.5rem] md:min-h-[3rem]`}>
-                {product.shortDescription || 'Premium 3D printed creation'}
-              </p>
+              <p
+  className={`text-gray-600 dark:text-gray-400
+    ${
+      viewMode === 'list'
+        ? 'text-sm md:text-base line-clamp-2'
+        : 'text-sm md:text-base line-clamp-2'
+    }
+    mb-2 md:mb-4
+    ${
+      viewMode === 'list'
+        ? 'min-h-0'
+        : 'min-h-[2.5rem] md:min-h-[3rem]'
+    }
+  `}
+>
+  {product.shortDescription || 'Premium 3D printed creation'}
+</p>
 
               <div className="flex items-baseline gap-3">
                 <span className={`font-bold ${viewMode === 'list' ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'}`}>

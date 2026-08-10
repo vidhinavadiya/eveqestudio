@@ -5,6 +5,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { CartProvider } from './context/CartContext';
 
 import SplashScreen from './components/SplashScreen';
+import ScrollToTop from './components/ScrollToTop';
 import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
@@ -88,6 +89,8 @@ import MyOrders from './pages/MyOrders';
   return (
     <CartProvider>
     <Router>
+          <ScrollToTop />
+
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} onLogout={handleLogout} darkMode={darkMode} toggleDarkMode={toggleDarkMode} />} />
@@ -121,7 +124,7 @@ import MyOrders from './pages/MyOrders';
         <Route path="/cart" element={isLoggedIn ? (<Cart isLoggedIn={isLoggedIn} onLogout={handleLogout} darkMode={darkMode} toggleDarkMode={toggleDarkMode} />) : (<Navigate to="/auth" replace />)} />
         <Route path="/all-products" element={<AllProducts isLoggedIn={isLoggedIn} onLogout={handleLogout} darkMode={darkMode} toggleDarkMode={toggleDarkMode} />} />
         <Route path="/checkout" element={<CheckoutPage isLoggedIn={isLoggedIn} onLogout={handleLogout} darkMode={darkMode} toggleDarkMode={toggleDarkMode} />} />
-        <Route path="/my-orders" element={isLoggedIn ? <MyOrders isLoggedIn={isLoggedIn} onLogout={handleLogout} darkMode={darkMode} toggleDarkMode={toggleDarkMode} /> : <Navigate to="/auth" replace />} />        <Route path="/product/:id" element={<ProductDetail isLoggedIn={isLoggedIn} onLogout={handleLogout} darkMode={darkMode} toggleDarkMode={toggleDarkMode} />} />
+        <Route path="/my-orders" element={isLoggedIn ? <MyOrders isLoggedIn={isLoggedIn} onLogout={handleLogout} darkMode={darkMode} toggleDarkMode={toggleDarkMode} /> : <Navigate to="/auth" replace />} />      
       
       <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

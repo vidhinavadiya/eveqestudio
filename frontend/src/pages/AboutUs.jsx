@@ -1,9 +1,23 @@
 // src/pages/AboutUs.jsx
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Navbar from '../components/Navbar'; // Assuming your Navbar is here
 import Footer from '../components/Footer';
 
+import ender3Image from '../assets/images/hero1.jpg';
+import prusaImage from '../assets/images/hero2.jpg';
+import formlabsImage from '../assets/images/hero3.jpg';
+
+import orderStep1 from '../assets/images/about1.jpg';
+
+import orderStep2 from '../assets/images/about6.jpg';
+
+import orderStep3 from '../assets/images/about7.jpg';
+
 export default function AboutUs({ isLoggedIn, onLogout, darkMode, toggleDarkMode }) {
+    const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-gray-100 transition-colors duration-300">
       {/* Navbar */}
@@ -15,8 +29,8 @@ export default function AboutUs({ isLoggedIn, onLogout, darkMode, toggleDarkMode
       />
 
       {/* Hero Section */}
-      <section className="relative pt-24 pb-40 px-6 md:px-12 lg:px-24 text-center overflow-hidden animate-fadeIn">
-        {/* Background Image with Overlay */}
+<section className="relative pt-40 md:pt-44 pb-40 px-6 md:px-12 lg:px-24 text-center overflow-hidden animate-fadeIn">
+          {/* Background Image with Overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070')" }}
@@ -31,9 +45,7 @@ export default function AboutUs({ isLoggedIn, onLogout, darkMode, toggleDarkMode
             We are a leading provider of premium 3D printers, filaments, accessories, and custom printing solutions. 
             Our mission is to empower creators, makers, and innovators with cutting-edge technology.
           </p>
-          <button className="px-8 py-4 rounded-xl font-semibold text-white dark:text-black bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-pulseSlow">
-            Explore Products
-          </button>
+          
         </div>
       </section>
 
@@ -46,22 +58,22 @@ export default function AboutUs({ isLoggedIn, onLogout, darkMode, toggleDarkMode
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {[
-              {
-                title: 'Ender 3 V2',
-                desc: 'Affordable and reliable FDM printer with high precision. Perfect for beginners and pros. Build volume: 220x220x250mm. Price: ₹15,000.',
-                img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800'
-              },
-              {
-                title: 'Prusa i3 MK3S+',
-                desc: 'Advanced FDM printer with auto-bed leveling and silent operation. Ideal for detailed prints. Build volume: 250x210x210mm. Price: ₹35,000.',
-                img: 'https://images.unsplash.com/photo-1581093458791-9f979ddcfa1e?auto=format&fit=crop&q=80&w=800'
-              },
-              {
-                title: 'Formlabs Form 3',
-                desc: 'SLA resin printer for high-resolution prototypes. Excellent for jewelry and dental models. Build volume: 145x145x185mm. Price: ₹2,50,000.',
-                img: 'https://images.unsplash.com/photo-1581093588401-e3995afeaece?auto=format&fit=crop&q=80&w=800'
-              }
-            ].map((product, i) => (
+  {
+    title: 'Ender 3 V2',
+    desc: 'Affordable and reliable FDM printer with high precision. Perfect for beginners and pros. Build volume: 220x220x250mm. Price: ₹15,000.',
+    img: ender3Image
+  },
+  {
+    title: 'Prusa i3 MK3S+',
+    desc: 'Advanced FDM printer with auto-bed leveling and silent operation. Ideal for detailed prints. Build volume: 250x210x210mm. Price: ₹35,000.',
+    img: prusaImage
+  },
+  {
+    title: 'Formlabs Form 3',
+    desc: 'SLA resin printer for high-resolution prototypes. Excellent for jewelry and dental models. Build volume: 145x145x185mm. Price: ₹2,50,000.',
+    img: formlabsImage
+  }
+].map((product, i) => (
               <div 
                 key={i} 
                 className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-2 animate-fadeUp"
@@ -98,25 +110,25 @@ export default function AboutUs({ isLoggedIn, onLogout, darkMode, toggleDarkMode
 
           <div className="space-y-12">
             {[
-              {
-                step: 1,
-                title: 'Browse & Select Products',
-                desc: 'Explore our wide range of 3D printers, filaments, and accessories. Add items to your cart.',
-                img: 'https://images.unsplash.com/photo-1581093450021-1b3ce408f6a4?auto=format&fit=crop&q=80&w=800'
-              },
-              {
-                step: 2,
-                title: 'Customize & Checkout',
-                desc: 'Choose custom options if available, enter shipping details, and proceed to secure payment.',
-                img: 'https://images.unsplash.com/photo-1581093588411-d60a88fcacda?auto=format&fit=crop&q=80&w=800'
-              },
-              {
-                step: 3,
-                title: 'Track & Receive',
-                desc: 'Get real-time tracking updates. Your order arrives safely with our premium packaging.',
-                img: 'https://images.unsplash.com/photo-1581093458791-9f979ddcfa1e?auto=format&fit=crop&q=80&w=800'
-              }
-            ].map((step, i) => (
+  {
+    step: 1,
+    title: 'Browse & Select Products',
+    desc: 'Explore our wide range of 3D printers, filaments, and accessories. Add items to your cart.',
+    img: orderStep1
+  },
+  {
+    step: 2,
+    title: 'Customize & Checkout',
+    desc: 'Choose custom options if available, enter shipping details, and proceed to secure payment.',
+    img: orderStep2
+  },
+  {
+    step: 3,
+    title: 'Track & Receive',
+    desc: 'Get real-time tracking updates. Your order arrives safely with our premium packaging.',
+    img: orderStep3
+  }
+].map((step, i) => (
               <div 
                 key={i} 
                 className="flex flex-col md:flex-row items-center gap-8 animate-fadeUp"
@@ -156,9 +168,12 @@ export default function AboutUs({ isLoggedIn, onLogout, darkMode, toggleDarkMode
         <p className="text-lg text-gray-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto animate-fadeUp animation-delay-200">
           Join thousands of creators using our premium products. Contact us for custom solutions.
         </p>
-        <button className="px-8 py-4 rounded-xl font-semibold text-white dark:text-black bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-pulseSlow">
-          Contact Us
-        </button>
+        <button
+  onClick={() => navigate('/contact')}
+  className="px-8 py-4 rounded-xl font-semibold text-white dark:text-black bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-pulseSlow"
+>
+  Contact Us
+</button>
       </section>
           <Footer />
       {/* Animations */}

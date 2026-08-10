@@ -1018,14 +1018,21 @@ if (loading) {
         </div>
 
         {/* Full Description */}
-        {product.productDescription && (
-          <div className="mt-16">
-            <h2 className="text-3xl font-bold mb-6">Product Description</h2>
-            <div className="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300">
-              {product.productDescription.split('\n').map((para, idx) => <p key={idx} className="mb-4">{para}</p>)}
-            </div>
-          </div>
-        )}
+{product.productDescription && (
+  <div className="mt-16 px-4 md:px-8 lg:px-12">
+    <h2 className="text-3xl font-bold mb-6">
+      Product Description
+    </h2>
+
+    <div className="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300">
+      {product.productDescription.split('\n').map((para, idx) => (
+        <p key={idx} className="mb-4">
+          {para}
+        </p>
+      ))}
+    </div>
+  </div>
+)}
 
         <ReviewSection product={product} />
 {/* Related Products Section */}
