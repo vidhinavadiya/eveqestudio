@@ -26,6 +26,8 @@ var reviewRoutes = require('./src/routes/review');
 var faqRoutes = require("./src/routes/faq");
 var productAddon = require("./src/routes/productAddon");
 var adminRoutes = require('./src/routes/admin.routes');
+const healthRoutes = require("./src/routes/health.routes");
+
 
 
 var app = express();
@@ -80,6 +82,8 @@ app.use("/api/faqs", faqRoutes);
 app.use("/api/link", productAddon);
 app.use('/uploads/product-addons', express.static(path.join(__dirname, 'src/uploads/product_addons')));
 app.use('/api/admin', adminRoutes);
+app.use("/api/health", healthRoutes);
+
 
 app.get('/', (req, res) => {
   res.json({ message: 'Eveqe Studio API is running' });
